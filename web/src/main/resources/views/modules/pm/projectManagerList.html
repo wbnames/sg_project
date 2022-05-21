@@ -1,0 +1,122 @@
+<% layout('/layouts/default.html', {title: '项目管理管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('项目管理管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('pm:projectManager:edit')){ %>
+					<a href="${ctx}/pm/projectManager/form" class="btn btn-default btnTool" title="${text('新增项目管理')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${projectManager}" action="${ctx}/pm/projectManager/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('序号')}：</label>
+					<div class="control-inline">
+						<#form:input path="serialNumber" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('项目名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="name" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('所在区域')}：</label>
+					<div class="control-inline">
+						<#form:input path="area" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('行业监管单位')}：</label>
+					<div class="control-inline">
+						<#form:input path="regulators" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('工程状态')}：</label>
+					<div class="control-inline">
+						<#form:input path="projectStatus" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('建设单位')}：</label>
+					<div class="control-inline">
+						<#form:input path="constructionUnit" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('总承包建设单位')}：</label>
+					<div class="control-inline">
+						<#form:input path="mainContractor" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注信息')}：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("序号")}', name:'serialNumber', index:'a.serial_number', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/pm/projectManager/form?serialNumber='+row.serialNumber+'" class="btnList" data-title="${text("编辑项目管理")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("项目名称")}', name:'name', index:'a.name', width:150, align:"left"},
+		{header:'${text("所在区域")}', name:'area', index:'a.area', width:150, align:"left"},
+		{header:'${text("行业监管单位")}', name:'regulators', index:'a.regulators', width:150, align:"left"},
+		{header:'${text("工程状态")}', name:'projectStatus', index:'a.project_status', width:150, align:"left"},
+		{header:'${text("建设单位")}', name:'constructionUnit', index:'a.construction_unit', width:150, align:"left"},
+		{header:'${text("总承包建设单位")}', name:'mainContractor', index:'a.main_contractor', width:150, align:"left"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('pm:projectManager:edit')){ %>
+				actions.push('<a href="${ctx}/pm/projectManager/form?serialNumber='+row.serialNumber+'" class="btnList" title="${text("编辑项目管理")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/pm/projectManager/disable?serialNumber='+row.serialNumber+'" class="btnList" title="${text("停用项目管理")}" data-confirm="${text("确认要停用该项目管理吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				} else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/pm/projectManager/enable?serialNumber='+row.serialNumber+'" class="btnList" title="${text("启用项目管理")}" data-confirm="${text("确认要启用该项目管理吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/pm/projectManager/delete?serialNumber='+row.serialNumber+'" class="btnList" title="${text("删除项目管理")}" data-confirm="${text("确认要删除该项目管理吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

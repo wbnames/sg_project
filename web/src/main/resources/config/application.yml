@@ -4,8 +4,8 @@
 #======================================#
 
 # 产品或项目名称、软件开发公司名称
-productName: JeeSite Demo
-companyName: ThinkGem
+productName: 步甲金属板工程项目管理系统
+companyName: 得一乾润科技有限公司
 
 # 产品版本、版权年份
 productVersion: V4.3
@@ -49,9 +49,9 @@ jdbc:
   # Mysql 数据库配置
   type: mysql
   driver: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3306/jeesite?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+  url: jdbc:mysql://127.0.0.1:3306/sgdb?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
   username: root
-  password: 123456
+  password: tb123123!
   testSql: SELECT 1
 
 #  # Oracle 数据库配置
