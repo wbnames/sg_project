@@ -21,7 +21,6 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="area", attrName="area", label="所在区域"),
 		@Column(name="regulators", attrName="regulators", label="行业监管单位"),
 		@Column(name="project_status", attrName="projectStatus", label="工程状态"),
-		@Column(name="construction_unit", attrName="constructionUnit", label="建设单位"),
 		@Column(name="main_contractor", attrName="mainContractor", label="总承包建设单位"),
 		@Column(includeEntity=DataEntity.class),
 	}, orderBy="a.update_date DESC"

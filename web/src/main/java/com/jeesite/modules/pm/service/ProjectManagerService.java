@@ -10,6 +10,7 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.pm.entity.ProjectManager;
 import com.jeesite.modules.pm.dao.ProjectManagerDao;
+import com.jeesite.modules.file.utils.FileUploadUtils;
 
 /**
  * 项目管理Service
@@ -49,6 +50,10 @@ public class ProjectManagerService extends CrudService<ProjectManagerDao, Projec
 	@Transactional(readOnly=false)
 	public void save(ProjectManager projectManager) {
 		super.save(projectManager);
+		// 保存上传图片
+		FileUploadUtils.saveFileUpload(projectManager, projectManager.getId(), "projectManager_image");
+		// 保存上传附件
+		FileUploadUtils.saveFileUpload(projectManager, projectManager.getId(), "projectManager_file");
 	}
 	
 	/**
