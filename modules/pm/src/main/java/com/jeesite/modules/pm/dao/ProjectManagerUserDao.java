@@ -5,14 +5,14 @@ package com.jeesite.modules.pm.dao;
 
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
-import com.jeesite.modules.pm.entity.ProjectManager;
+import com.jeesite.modules.pm.entity.ProjectManagerUser;
 
 /**
  * 项目管理DAO接口
  * @author wang_bo
- * @version 2022-05-21
+ * @version 2022-05-22
  */
 @MyBatisDao
-public interface ProjectManagerDao extends CrudDao<ProjectManager> {
+public interface ProjectManagerUserDao extends CrudDao<ProjectManagerUser> {
 	
 }

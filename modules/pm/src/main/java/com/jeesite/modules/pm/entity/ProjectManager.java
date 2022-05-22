@@ -4,6 +4,8 @@
 package com.jeesite.modules.pm.entity;
 
 import org.hibernate.validator.constraints.Length;
+import java.util.List;
+import com.jeesite.common.collect.ListUtils;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -13,7 +15,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 项目管理Entity
  * @author wang_bo
- * @version 2022-05-21
+ * @version 2022-05-22
  */
 @Table(name="project_manager", alias="a", label="项目管理信息", columns={
 		@Column(name="serial_number", attrName="serialNumber", label="序号", isPK=true),
@@ -33,8 +35,8 @@ public class ProjectManager extends DataEntity<ProjectManager> {
 	private String area;		// 所在区域
 	private String regulators;		// 行业监管单位
 	private String projectStatus;		// 工程状态
-	private String constructionUnit;		// 建设单位
 	private String mainContractor;		// 总承包建设单位
+	private List<ProjectManagerUser> projectManagerUserList = ListUtils.newArrayList();		// 子表列表
 	
 	public ProjectManager() {
 		this(null);
@@ -88,15 +90,6 @@ public class ProjectManager extends DataEntity<ProjectManager> {
 		this.projectStatus = projectStatus;
 	}
 	
-	@Length(min=0, max=200, message="建设单位长度不能超过 200 个字符")
-	public String getConstructionUnit() {
-		return constructionUnit;
-	}
-
-	public void setConstructionUnit(String constructionUnit) {
-		this.constructionUnit = constructionUnit;
-	}
-	
 	@Length(min=0, max=200, message="总承包建设单位长度不能超过 200 个字符")
 	public String getMainContractor() {
 		return mainContractor;
@@ -104,6 +97,14 @@ public class ProjectManager extends DataEntity<ProjectManager> {
 
 	public void setMainContractor(String mainContractor) {
 		this.mainContractor = mainContractor;
+	}
+	
+	public List<ProjectManagerUser> getProjectManagerUserList() {
+		return projectManagerUserList;
+	}
+
+	public void setProjectManagerUserList(List<ProjectManagerUser> projectManagerUserList) {
+		this.projectManagerUserList = projectManagerUserList;
 	}
 	
 }
