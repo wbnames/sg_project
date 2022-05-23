@@ -1,0 +1,180 @@
+<% layout('/layouts/default.html', {title: '合同管理管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('合同管理管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('cm:contractManager:edit')){ %>
+					<a href="${ctx}/cm/contractManager/form" class="btn btn-default btnTool" title="${text('新增合同管理')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${contractManager}" action="${ctx}/cm/contractManager/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('合同名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="contractName" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('合同编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="contractCode" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('所属项目')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="contractProject" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('签订日期')}：</label>
+					<div class="control-inline">
+						<#form:input path="dateSigning" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('合同类型')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="contractType" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('合同金额')}：</label>
+					<div class="control-inline">
+						<#form:input path="contractSum" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('甲方单位')}：</label>
+					<div class="control-inline">
+						<#form:input path="firstUnit" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('签订人')}：</label>
+					<div class="control-inline">
+						<#form:input path="signUser" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('付款方式')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="payMethod" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('结算方式')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="closeMethod" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('预收款')}：</label>
+					<div class="control-inline">
+						<#form:input path="advancesReceived" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('保证金')}：</label>
+					<div class="control-inline">
+						<#form:input path="earnestMoney" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('收款条件')}：</label>
+					<div class="control-inline">
+						<#form:input path="collectionTerms" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注信息')}：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('主要条款')}：</label>
+					<div class="control-inline">
+						<#form:input path="mainClause" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("合同名称")}', name:'contractName', index:'a.contract_name', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/cm/contractManager/form?numCode='+row.numCode+'" class="btnList" data-title="${text("编辑合同管理")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("合同编号")}', name:'contractCode', index:'a.contract_code', width:150, align:"left"},
+		{header:'${text("所属项目")}', name:'contractProject', index:'a.contract_project', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("签订日期")}', name:'dateSigning', index:'a.date_signing', width:150, align:"left"},
+		{header:'${text("合同类型")}', name:'contractType', index:'a.contract_type', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("合同金额")}', name:'contractSum', index:'a.contract_sum', width:150, align:"left"},
+		{header:'${text("甲方单位")}', name:'firstUnit', index:'a.first_unit', width:150, align:"left"},
+		{header:'${text("签订人")}', name:'signUser', index:'a.sign_user', width:150, align:"left"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("付款方式")}', name:'payMethod', index:'a.pay_method', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("结算方式")}', name:'closeMethod', index:'a.close_method', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("预收款")}', name:'advancesReceived', index:'a.advances_received', width:150, align:"left"},
+		{header:'${text("保证金")}', name:'earnestMoney', index:'a.earnest_money', width:150, align:"left"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("收款条件")}', name:'collectionTerms', index:'a.collection_terms', width:150, align:"left"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text("主要条款")}', name:'mainClause', index:'a.main_clause', width:150, align:"left"},
+		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('cm:contractManager:edit')){ %>
+				actions.push('<a href="${ctx}/cm/contractManager/form?numCode='+row.numCode+'" class="btnList" title="${text("编辑合同管理")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/cm/contractManager/disable?numCode='+row.numCode+'" class="btnList" title="${text("停用合同管理")}" data-confirm="${text("确认要停用该合同管理吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				} else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/cm/contractManager/enable?numCode='+row.numCode+'" class="btnList" title="${text("启用合同管理")}" data-confirm="${text("确认要启用该合同管理吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/cm/contractManager/delete?numCode='+row.numCode+'" class="btnList" title="${text("删除合同管理")}" data-confirm="${text("确认要删除该合同管理吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

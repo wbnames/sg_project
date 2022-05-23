@@ -1,0 +1,176 @@
+<% layout('/layouts/default.html', {title: '退还管理管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('退还管理管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('logistics:returnLogistics:edit')){ %>
+					<a href="${ctx}/logistics/returnLogistics/form" class="btn btn-default btnTool" title="${text('新增退还管理')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${returnLogistics}" action="${ctx}/logistics/returnLogistics/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('退还主题')}：</label>
+					<div class="control-inline">
+						<#form:input path="returnName" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('所属项目')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="returnProject" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('退还厂商')}：</label>
+					<div class="control-inline">
+						<#form:input path="returnManufacturer" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('收货人')}：</label>
+					<div class="control-inline">
+						<#form:input path="consignee" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('收货人电话')}：</label>
+					<div class="control-inline">
+						<#form:input path="consigneePhone" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('退还日期')}：</label>
+					<div class="control-inline">
+						<#form:input path="returnDate" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('收货地址')}：</label>
+					<div class="control-inline">
+						<#form:input path="takeAddress" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('快递单号')}：</label>
+					<div class="control-inline">
+						<#form:input path="expressageOdd" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('快递费用')}：</label>
+					<div class="control-inline">
+						<#form:input path="expressageCost" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('快递公司')}：</label>
+					<div class="control-inline">
+						<#form:input path="expressageCom" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('退还状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="returnStatus" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('发件人')}：</label>
+					<div class="control-inline">
+						<#form:input path="addresser" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('发件人电话')}：</label>
+					<div class="control-inline">
+						<#form:input path="addresserPhone" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('寄出地址')}：</label>
+					<div class="control-inline">
+						<#form:input path="addresserAddress" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注信息')}：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("退还主题")}', name:'returnName', index:'a.return_name', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/logistics/returnLogistics/form?numCode='+row.numCode+'" class="btnList" data-title="${text("编辑退还管理")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("所属项目")}', name:'returnProject', index:'a.return_project', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("退还厂商")}', name:'returnManufacturer', index:'a.return_manufacturer', width:150, align:"left"},
+		{header:'${text("收货人")}', name:'consignee', index:'a.consignee', width:150, align:"left"},
+		{header:'${text("收货人电话")}', name:'consigneePhone', index:'a.consignee_phone', width:150, align:"left"},
+		{header:'${text("退还日期")}', name:'returnDate', index:'a.return_date', width:150, align:"left"},
+		{header:'${text("收货地址")}', name:'takeAddress', index:'a.take_address', width:150, align:"left"},
+		{header:'${text("快递单号")}', name:'expressageOdd', index:'a.expressage_odd', width:150, align:"left"},
+		{header:'${text("快递费用")}', name:'expressageCost', index:'a.expressage_cost', width:150, align:"left"},
+		{header:'${text("快递公司")}', name:'expressageCom', index:'a.expressage_com', width:150, align:"left"},
+		{header:'${text("退还状态")}', name:'returnStatus', index:'a.return_status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("发件人")}', name:'addresser', index:'a.addresser', width:150, align:"left"},
+		{header:'${text("发件人电话")}', name:'addresserPhone', index:'a.addresser_phone', width:150, align:"left"},
+		{header:'${text("寄出地址")}', name:'addresserAddress', index:'a.addresser_address', width:150, align:"left"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('logistics:returnLogistics:edit')){ %>
+				actions.push('<a href="${ctx}/logistics/returnLogistics/form?numCode='+row.numCode+'" class="btnList" title="${text("编辑退还管理")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/logistics/returnLogistics/disable?numCode='+row.numCode+'" class="btnList" title="${text("停用退还管理")}" data-confirm="${text("确认要停用该退还管理吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				} else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/logistics/returnLogistics/enable?numCode='+row.numCode+'" class="btnList" title="${text("启用退还管理")}" data-confirm="${text("确认要启用该退还管理吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/logistics/returnLogistics/delete?numCode='+row.numCode+'" class="btnList" title="${text("删除退还管理")}" data-confirm="${text("确认要删除该退还管理吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

@@ -1,0 +1,176 @@
+<% layout('/layouts/default.html', {title: '发货管理管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('发货管理管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('shipments:shipmentsLogistics:edit')){ %>
+					<a href="${ctx}/shipments/shipmentsLogistics/form" class="btn btn-default btnTool" title="${text('新增发货管理')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${shipmentsLogistics}" action="${ctx}/shipments/shipmentsLogistics/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('发货主题')}：</label>
+					<div class="control-inline">
+						<#form:input path="shipmentsName" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('所属项目')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="shipmentsProject" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('发货厂商')}：</label>
+					<div class="control-inline">
+						<#form:input path="shipmentsManufacturer" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('发货人')}：</label>
+					<div class="control-inline">
+						<#form:input path="shipmentsUser" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('发货人电话')}：</label>
+					<div class="control-inline">
+						<#form:input path="shipmentsUserPhone" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('发货日期')}：</label>
+					<div class="control-inline">
+						<#form:input path="shipmentsDate" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('发货地址')}：</label>
+					<div class="control-inline">
+						<#form:input path="shipmentsAddress" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('发货单号')}：</label>
+					<div class="control-inline">
+						<#form:input path="shipmentsOdd" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('快递费用')}：</label>
+					<div class="control-inline">
+						<#form:input path="shipmentsCost" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('快递公司')}：</label>
+					<div class="control-inline">
+						<#form:input path="shipmentsCom" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('发货状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="shipmentsStatus" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('收货人')}：</label>
+					<div class="control-inline">
+						<#form:input path="consignee" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('收货人电话')}：</label>
+					<div class="control-inline">
+						<#form:input path="consigneePhone" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('收货人地址')}：</label>
+					<div class="control-inline">
+						<#form:input path="consigneeAddress" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注信息')}：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("发货主题")}', name:'shipmentsName', index:'a.shipments_name', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/shipments/shipmentsLogistics/form?numCode='+row.numCode+'" class="btnList" data-title="${text("编辑发货管理")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("所属项目")}', name:'shipmentsProject', index:'a.shipments_project', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("发货厂商")}', name:'shipmentsManufacturer', index:'a.shipments_manufacturer', width:150, align:"left"},
+		{header:'${text("发货人")}', name:'shipmentsUser', index:'a.shipments_user', width:150, align:"left"},
+		{header:'${text("发货人电话")}', name:'shipmentsUserPhone', index:'a.shipments_user_phone', width:150, align:"left"},
+		{header:'${text("发货日期")}', name:'shipmentsDate', index:'a.shipments_date', width:150, align:"left"},
+		{header:'${text("发货地址")}', name:'shipmentsAddress', index:'a.shipments_address', width:150, align:"left"},
+		{header:'${text("发货单号")}', name:'shipmentsOdd', index:'a.shipments_odd', width:150, align:"left"},
+		{header:'${text("快递费用")}', name:'shipmentsCost', index:'a.shipments_cost', width:150, align:"left"},
+		{header:'${text("快递公司")}', name:'shipmentsCom', index:'a.shipments_com', width:150, align:"left"},
+		{header:'${text("发货状态")}', name:'shipmentsStatus', index:'a.shipments_status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("收货人")}', name:'consignee', index:'a.consignee', width:150, align:"left"},
+		{header:'${text("收货人电话")}', name:'consigneePhone', index:'a.consignee_phone', width:150, align:"left"},
+		{header:'${text("收货人地址")}', name:'consigneeAddress', index:'a.consignee_address', width:150, align:"left"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('shipments:shipmentsLogistics:edit')){ %>
+				actions.push('<a href="${ctx}/shipments/shipmentsLogistics/form?numCode='+row.numCode+'" class="btnList" title="${text("编辑发货管理")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/shipments/shipmentsLogistics/disable?numCode='+row.numCode+'" class="btnList" title="${text("停用发货管理")}" data-confirm="${text("确认要停用该发货管理吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				} else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/shipments/shipmentsLogistics/enable?numCode='+row.numCode+'" class="btnList" title="${text("启用发货管理")}" data-confirm="${text("确认要启用该发货管理吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/shipments/shipmentsLogistics/delete?numCode='+row.numCode+'" class="btnList" title="${text("删除发货管理")}" data-confirm="${text("确认要删除该发货管理吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>
