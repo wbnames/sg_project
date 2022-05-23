@@ -15,7 +15,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 项目管理Entity
  * @author wang_bo
- * @version 2022-05-22
+ * @version 2022-05-23
  */
 @Table(name="project_manager", alias="a", label="项目管理信息", columns={
 		@Column(name="serial_number", attrName="serialNumber", label="序号", isPK=true),
@@ -23,6 +23,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="area", attrName="area", label="所在区域"),
 		@Column(name="regulators", attrName="regulators", label="行业监管单位"),
 		@Column(name="project_status", attrName="projectStatus", label="工程状态"),
+		@Column(name="construction_unit", attrName="constructionUnit", label="建设单位"),
 		@Column(name="main_contractor", attrName="mainContractor", label="总承包建设单位"),
 		@Column(includeEntity=DataEntity.class),
 	}, orderBy="a.update_date DESC"
@@ -35,6 +36,7 @@ public class ProjectManager extends DataEntity<ProjectManager> {
 	private String area;		// 所在区域
 	private String regulators;		// 行业监管单位
 	private String projectStatus;		// 工程状态
+	private String constructionUnit;		// 建设单位
 	private String mainContractor;		// 总承包建设单位
 	private List<ProjectManagerUser> projectManagerUserList = ListUtils.newArrayList();		// 子表列表
 	
@@ -88,6 +90,15 @@ public class ProjectManager extends DataEntity<ProjectManager> {
 
 	public void setProjectStatus(String projectStatus) {
 		this.projectStatus = projectStatus;
+	}
+	
+	@Length(min=0, max=255, message="建设单位长度不能超过 255 个字符")
+	public String getConstructionUnit() {
+		return constructionUnit;
+	}
+
+	public void setConstructionUnit(String constructionUnit) {
+		this.constructionUnit = constructionUnit;
 	}
 	
 	@Length(min=0, max=200, message="总承包建设单位长度不能超过 200 个字符")

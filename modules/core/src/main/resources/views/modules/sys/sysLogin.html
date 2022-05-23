@@ -99,9 +99,9 @@
 		</div>
 	</div>
 	<div class="login-copyright">
-		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By <a
+		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} <a
 			id="loginKey" data-key="${@Global.getConfig('shiro.loginSubmit.secretKey')}"
-			href="http://jeesite.com" target="_blank">JeeSite ${@Global.getProperty('jeesiteVersion')}</a>
+			href="http://jeesite.com" target="_blank">${@Global.getConfig('productVersion')}</a>
 	</div>
 </div>
 <% } %>

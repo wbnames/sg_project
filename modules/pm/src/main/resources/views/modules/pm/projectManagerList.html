@@ -30,8 +30,10 @@
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('所在区域')}：</label>
-					<div class="control-inline">
-						<#form:input path="area" maxlength="200" class="form-control width-120"/>
+					<div class="control-inline width-120" >
+						<#form:treeselect id="area" title="${text('区域选择')}"
+							path="area" labelPath="" 
+							url="${ctx}/sys/area/treeData" allowClear="true"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -44,6 +46,12 @@
 					<label class="control-label">${text('工程状态')}：</label>
 					<div class="control-inline">
 						<#form:input path="projectStatus" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('建设单位')}：</label>
+					<div class="control-inline">
+						<#form:input path="constructionUnit" maxlength="255" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -84,9 +92,10 @@ $('#dataGrid').dataGrid({
 			return '<a href="${ctx}/pm/projectManager/form?serialNumber='+row.serialNumber+'" class="btnList" data-title="${text("编辑项目管理")}">'+(val||row.id)+'</a>';
 		}},
 		{header:'${text("项目名称")}', name:'name', index:'a.name', width:150, align:"left"},
-		{header:'${text("所在区域")}', name:'area', index:'a.area', width:150, align:"left"},
+		{header:'${text("所在区域")}', name:'', index:'a.area', width:150, align:"center"},
 		{header:'${text("行业监管单位")}', name:'regulators', index:'a.regulators', width:150, align:"left"},
 		{header:'${text("工程状态")}', name:'projectStatus', index:'a.project_status', width:150, align:"left"},
+		{header:'${text("建设单位")}', name:'constructionUnit', index:'a.construction_unit', width:150, align:"left"},
 		{header:'${text("总承包建设单位")}', name:'mainContractor', index:'a.main_contractor', width:150, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);

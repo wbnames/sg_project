@@ -18,6 +18,10 @@
         <module>../modules/core</module>
         <module>../modules/cms</module>
 		<module>../modules/pm</module>
+		<module>../modules/cm</module>
+		<module>../modules/logistics</module>
+		<module>../modules/production</module>
+		<module>../modules/design</module>
         <module>../web</module>
     </modules>
 	

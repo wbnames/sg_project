@@ -46,7 +46,30 @@
 			<artifactId>jeesite-module-pm</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-
+		<!-- 合同管理 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-cm</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<!-- 设计管理 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-design</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<!-- 生产管理 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-production</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<!-- 物流管理 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-logistics</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 		<!-- 在线文档接口 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
