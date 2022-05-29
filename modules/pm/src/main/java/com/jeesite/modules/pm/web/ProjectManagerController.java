@@ -26,7 +26,7 @@ import com.jeesite.modules.pm.service.ProjectManagerService;
 /**
  * 项目管理Controller
  * @author wang_bo
- * @version 2022-05-23
+ * @version 2022-05-30
  */
 @Controller
 @RequestMapping(value = "${adminPath}/pm/projectManager")

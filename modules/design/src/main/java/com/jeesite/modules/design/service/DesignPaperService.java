@@ -12,20 +12,20 @@ import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.design.entity.DesignPaper;
 import com.jeesite.modules.design.dao.DesignPaperDao;
 import com.jeesite.modules.file.utils.FileUploadUtils;
-import com.jeesite.modules.design.entity.DesignProduct;
-import com.jeesite.modules.design.dao.DesignProductDao;
+import com.jeesite.modules.design.entity.DesignPP;
+import com.jeesite.modules.design.dao.DesignPPDao;
 
 /**
  * 设计图纸Service
  * @author wang_bo
- * @version 2022-05-24
+ * @version 2022-05-30
  */
 @Service
 @Transactional(readOnly=true)
 public class DesignPaperService extends CrudService<DesignPaperDao, DesignPaper> {
 	
 	@Autowired
-	private DesignProductDao designProductDao;
+	private DesignPPDao designPPDao;
 	
 	/**
 	 * 获取单条数据
@@ -36,9 +36,9 @@ public class DesignPaperService extends CrudService<DesignPaperDao, DesignPaper>
 	public DesignPaper get(DesignPaper designPaper) {
 		DesignPaper entity = super.get(designPaper);
 		if (entity != null){
-			DesignProduct designProduct = new DesignProduct(entity);
-			designProduct.setStatus(DesignProduct.STATUS_NORMAL);
-			entity.setDesignProductList(designProductDao.findList(designProduct));
+			DesignPP designPP = new DesignPP(entity);
+			designPP.setStatus(DesignPP.STATUS_NORMAL);
+			entity.setDesignPPList(designPPDao.findList(designPP));
 		}
 		return entity;
 	}
@@ -56,13 +56,13 @@ public class DesignPaperService extends CrudService<DesignPaperDao, DesignPaper>
 	
 	/**
 	 * 查询子表分页数据
-	 * @param designProduct
-	 * @param designProduct.page 分页对象
+	 * @param designPP
+	 * @param designPP.page 分页对象
 	 * @return
 	 */
-	public Page<DesignProduct> findSubPage(DesignProduct designProduct) {
-		Page<DesignProduct> page = designProduct.getPage();
-		page.setList(designProductDao.findList(designProduct));
+	public Page<DesignPP> findSubPage(DesignPP designPP) {
+		Page<DesignPP> page = designPP.getPage();
+		page.setList(designPPDao.findList(designPP));
 		return page;
 	}
 	
@@ -74,19 +74,21 @@ public class DesignPaperService extends CrudService<DesignPaperDao, DesignPaper>
 	@Transactional(readOnly=false)
 	public void save(DesignPaper designPaper) {
 		super.save(designPaper);
+		// 保存上传图片
+		FileUploadUtils.saveFileUpload(designPaper, designPaper.getId(), "designPaper_image");
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(designPaper, designPaper.getId(), "designPaper_file");
 		// 保存 DesignPaper子表
-		for (DesignProduct designProduct : designPaper.getDesignProductList()){
-			if (!DesignProduct.STATUS_DELETE.equals(designProduct.getStatus())){
-				designProduct.setContractlCode(designPaper);
-				if (designProduct.getIsNewRecord()){
-					designProductDao.insert(designProduct);
+		for (DesignPP designPP : designPaper.getDesignPPList()){
+			if (!DesignPP.STATUS_DELETE.equals(designPP.getStatus())){
+				designPP.setProductionCode(designPaper);
+				if (designPP.getIsNewRecord()){
+					designPPDao.insert(designPP);
 				}else{
-					designProductDao.update(designProduct);
+					designPPDao.update(designPP);
 				}
 			}else{
-				designProductDao.delete(designProduct);
+				designPPDao.delete(designPP);
 			}
 		}
 	}
@@ -109,9 +111,9 @@ public class DesignPaperService extends CrudService<DesignPaperDao, DesignPaper>
 	@Transactional(readOnly=false)
 	public void delete(DesignPaper designPaper) {
 		super.delete(designPaper);
-		DesignProduct designProduct = new DesignProduct();
-		designProduct.setContractlCode(designPaper);
-		designProductDao.deleteByEntity(designProduct);
+		DesignPP designPP = new DesignPP();
+		designPP.setProductionCode(designPaper);
+		designPPDao.deleteByEntity(designPP);
 	}
 	
 }

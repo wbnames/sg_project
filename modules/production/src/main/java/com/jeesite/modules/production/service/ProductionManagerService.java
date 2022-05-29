@@ -11,25 +11,25 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.production.entity.ProductionManager;
 import com.jeesite.modules.production.dao.ProductionManagerDao;
-import com.jeesite.modules.production.entity.DesignProductProduction;
-import com.jeesite.modules.production.dao.DesignProductProductionDao;
-import com.jeesite.modules.production.entity.DesignPaperProduction;
-import com.jeesite.modules.production.dao.DesignPaperProductionDao;
+import com.jeesite.modules.production.entity.DesignDDD;
+import com.jeesite.modules.production.dao.DesignDDDDao;
+import com.jeesite.modules.production.entity.DesignPPP;
+import com.jeesite.modules.production.dao.DesignPPPDao;
 
 /**
  * 生产管理Service
  * @author wang_bo
- * @version 2022-05-24
+ * @version 2022-05-30
  */
 @Service
 @Transactional(readOnly=true)
 public class ProductionManagerService extends CrudService<ProductionManagerDao, ProductionManager> {
 	
 	@Autowired
-	private DesignProductProductionDao designProductProductionDao;
+	private DesignDDDDao designDDDDao;
 	
 	@Autowired
-	private DesignPaperProductionDao designPaperProductionDao;
+	private DesignPPPDao designPPPDao;
 	
 	/**
 	 * 获取单条数据
@@ -40,12 +40,12 @@ public class ProductionManagerService extends CrudService<ProductionManagerDao, 
 	public ProductionManager get(ProductionManager productionManager) {
 		ProductionManager entity = super.get(productionManager);
 		if (entity != null){
-			DesignProductProduction designProductProduction = new DesignProductProduction(entity);
-			designProductProduction.setStatus(DesignProductProduction.STATUS_NORMAL);
-			entity.setDesignProductProductionList(designProductProductionDao.findList(designProductProduction));
-			DesignPaperProduction designPaperProduction = new DesignPaperProduction(entity);
-			designPaperProduction.setStatus(DesignPaperProduction.STATUS_NORMAL);
-			entity.setDesignPaperProductionList(designPaperProductionDao.findList(designPaperProduction));
+			DesignDDD designDDD = new DesignDDD(entity);
+			designDDD.setStatus(DesignDDD.STATUS_NORMAL);
+			entity.setDesignDDDList(designDDDDao.findList(designDDD));
+			DesignPPP designPPP = new DesignPPP(entity);
+			designPPP.setStatus(DesignPPP.STATUS_NORMAL);
+			entity.setDesignPPPList(designPPPDao.findList(designPPP));
 		}
 		return entity;
 	}
@@ -63,25 +63,25 @@ public class ProductionManagerService extends CrudService<ProductionManagerDao, 
 	
 	/**
 	 * 查询子表分页数据
-	 * @param designProductProduction
-	 * @param designProductProduction.page 分页对象
+	 * @param designDDD
+	 * @param designDDD.page 分页对象
 	 * @return
 	 */
-	public Page<DesignProductProduction> findSubPage(DesignProductProduction designProductProduction) {
-		Page<DesignProductProduction> page = designProductProduction.getPage();
-		page.setList(designProductProductionDao.findList(designProductProduction));
+	public Page<DesignDDD> findSubPage(DesignDDD designDDD) {
+		Page<DesignDDD> page = designDDD.getPage();
+		page.setList(designDDDDao.findList(designDDD));
 		return page;
 	}
 	
 	/**
 	 * 查询子表分页数据
-	 * @param designPaperProduction
-	 * @param designPaperProduction.page 分页对象
+	 * @param designPPP
+	 * @param designPPP.page 分页对象
 	 * @return
 	 */
-	public Page<DesignPaperProduction> findSubPage(DesignPaperProduction designPaperProduction) {
-		Page<DesignPaperProduction> page = designPaperProduction.getPage();
-		page.setList(designPaperProductionDao.findList(designPaperProduction));
+	public Page<DesignPPP> findSubPage(DesignPPP designPPP) {
+		Page<DesignPPP> page = designPPP.getPage();
+		page.setList(designPPPDao.findList(designPPP));
 		return page;
 	}
 	
@@ -94,29 +94,29 @@ public class ProductionManagerService extends CrudService<ProductionManagerDao, 
 	public void save(ProductionManager productionManager) {
 		super.save(productionManager);
 		// 保存 ProductionManager子表
-		for (DesignProductProduction designProductProduction : productionManager.getDesignProductProductionList()){
-			if (!DesignProductProduction.STATUS_DELETE.equals(designProductProduction.getStatus())){
-				designProductProduction.setProductionCode(productionManager);
-				if (designProductProduction.getIsNewRecord()){
-					designProductProductionDao.insert(designProductProduction);
+		for (DesignDDD designDDD : productionManager.getDesignDDDList()){
+			if (!DesignDDD.STATUS_DELETE.equals(designDDD.getStatus())){
+				designDDD.setProductionCode(productionManager);
+				if (designDDD.getIsNewRecord()){
+					designDDDDao.insert(designDDD);
 				}else{
-					designProductProductionDao.update(designProductProduction);
+					designDDDDao.update(designDDD);
 				}
 			}else{
-				designProductProductionDao.delete(designProductProduction);
+				designDDDDao.delete(designDDD);
 			}
 		}
 		// 保存 ProductionManager子表
-		for (DesignPaperProduction designPaperProduction : productionManager.getDesignPaperProductionList()){
-			if (!DesignPaperProduction.STATUS_DELETE.equals(designPaperProduction.getStatus())){
-				designPaperProduction.setProductionCode(productionManager);
-				if (designPaperProduction.getIsNewRecord()){
-					designPaperProductionDao.insert(designPaperProduction);
+		for (DesignPPP designPPP : productionManager.getDesignPPPList()){
+			if (!DesignPPP.STATUS_DELETE.equals(designPPP.getStatus())){
+				designPPP.setProductId(productionManager);
+				if (designPPP.getIsNewRecord()){
+					designPPPDao.insert(designPPP);
 				}else{
-					designPaperProductionDao.update(designPaperProduction);
+					designPPPDao.update(designPPP);
 				}
 			}else{
-				designPaperProductionDao.delete(designPaperProduction);
+				designPPPDao.delete(designPPP);
 			}
 		}
 	}
@@ -139,12 +139,12 @@ public class ProductionManagerService extends CrudService<ProductionManagerDao, 
 	@Transactional(readOnly=false)
 	public void delete(ProductionManager productionManager) {
 		super.delete(productionManager);
-		DesignProductProduction designProductProduction = new DesignProductProduction();
-		designProductProduction.setProductionCode(productionManager);
-		designProductProductionDao.deleteByEntity(designProductProduction);
-		DesignPaperProduction designPaperProduction = new DesignPaperProduction();
-		designPaperProduction.setProductionCode(productionManager);
-		designPaperProductionDao.deleteByEntity(designPaperProduction);
+		DesignDDD designDDD = new DesignDDD();
+		designDDD.setProductionCode(productionManager);
+		designDDDDao.deleteByEntity(designDDD);
+		DesignPPP designPPP = new DesignPPP();
+		designPPP.setProductId(productionManager);
+		designPPPDao.deleteByEntity(designPPP);
 	}
 	
 }

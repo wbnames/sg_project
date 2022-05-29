@@ -5,14 +5,14 @@ package com.jeesite.modules.design.dao;
 
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
-import com.jeesite.modules.design.entity.DesignProduct;
+import com.jeesite.modules.design.entity.DesignPP;
 
 /**
  * 设计图纸DAO接口
  * @author wang_bo
- * @version 2022-05-24
+ * @version 2022-05-30
  */
 @MyBatisDao
-public interface DesignProductDao extends CrudDao<DesignProduct> {
+public interface DesignPPDao extends CrudDao<DesignPP> {
 	
 }

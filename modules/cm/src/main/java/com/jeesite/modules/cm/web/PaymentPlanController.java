@@ -25,7 +25,7 @@ import com.jeesite.modules.cm.service.PaymentPlanService;
 /**
  * 收款计划Controller
  * @author wang_bo
- * @version 2022-05-23
+ * @version 2022-05-30
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cm/paymentPlan")

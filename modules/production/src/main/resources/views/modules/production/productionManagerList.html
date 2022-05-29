@@ -23,7 +23,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">${text('生产厂家')}：</label>
+					<label class="control-label">${text('生产厂商')}：</label>
 					<div class="control-inline">
 						<#form:input path="productionManu" maxlength="200" class="form-control width-120"/>
 					</div>
@@ -41,9 +41,16 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="control-label">${text('计划开始日期')}：</label>
+					<div class="control-inline">
+						<#form:input path="planStartDate" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="control-label">${text('计划完成日期')}：</label>
 					<div class="control-inline">
-						<#form:input path="planDate" readonly="true" maxlength="20" class="form-control laydate width-date"
+						<#form:input path="planEndDate" readonly="true" maxlength="20" class="form-control laydate width-date"
 							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 					</div>
 				</div>
@@ -78,12 +85,13 @@ $('#dataGrid').dataGrid({
 		{header:'${text("关联项目")}', name:'productionProject', index:'a.production_project', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/production/productionManager/form?numCode='+row.numCode+'" class="btnList" data-title="${text("编辑生产管理")}">'+(val||row.id)+'</a>';
 		}},
-		{header:'${text("生产厂家")}', name:'productionManu', index:'a.production_manu', width:150, align:"left"},
+		{header:'${text("生产厂商")}', name:'productionManu', index:'a.production_manu', width:150, align:"left"},
 		{header:'${text("填报人")}', name:'productionUser', index:'a.production_user', width:150, align:"left"},
 		{header:'${text("任务状态")}', name:'productionStatus', index:'a.production_status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text("计划完成日期")}', name:'planDate', index:'a.plan_date', width:150, align:"left"},
+		{header:'${text("计划开始日期")}', name:'planStartDate', index:'a.plan_start_date', width:150, align:"left"},
+		{header:'${text("计划完成日期")}', name:'planEndDate', index:'a.plan_end_date', width:150, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
 		}},

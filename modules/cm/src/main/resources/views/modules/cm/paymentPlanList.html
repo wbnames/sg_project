@@ -59,36 +59,6 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">${text('罚款')}：</label>
-					<div class="control-inline">
-						<#form:input path="penalty" maxlength="200" class="form-control width-120"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('扣款')}：</label>
-					<div class="control-inline">
-						<#form:input path="cutPayment" maxlength="50" class="form-control width-120"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('已收款金额')}：</label>
-					<div class="control-inline">
-						<#form:input path="paymentHasSum" maxlength="50" class="form-control width-120"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('已开票金额')}：</label>
-					<div class="control-inline">
-						<#form:input path="invoiceSum" maxlength="50" class="form-control width-120"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('帐号名称')}：</label>
-					<div class="control-inline">
-						<#form:input path="accName" maxlength="50" class="form-control width-120"/>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="control-label">${text('银行账户')}：</label>
 					<div class="control-inline">
 						<#form:input path="bankAcc" maxlength="50" class="form-control width-120"/>
@@ -150,11 +120,6 @@ $('#dataGrid').dataGrid({
 			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
 		}},
 		{header:'${text("甲方单位")}', name:'firstUnit', index:'a.first_unit', width:150, align:"left"},
-		{header:'${text("罚款")}', name:'penalty', index:'a.penalty', width:150, align:"left"},
-		{header:'${text("扣款")}', name:'cutPayment', index:'a.cut_payment', width:150, align:"left"},
-		{header:'${text("已收款金额")}', name:'paymentHasSum', index:'a.payment_has_sum', width:150, align:"left"},
-		{header:'${text("已开票金额")}', name:'invoiceSum', index:'a.invoice_sum', width:150, align:"left"},
-		{header:'${text("帐号名称")}', name:'accName', index:'a.acc_name', width:150, align:"left"},
 		{header:'${text("银行账户")}', name:'bankAcc', index:'a.bank_acc', width:150, align:"left"},
 		{header:'${text("签订日期")}', name:'signDate', index:'a.sign_date', width:150, align:"left"},
 		{header:'${text("填报人")}', name:'informantUser', index:'a.informant_user', width:150, align:"left"},

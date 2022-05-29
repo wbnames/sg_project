@@ -13,7 +13,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 收款计划Entity
  * @author wang_bo
- * @version 2022-05-23
+ * @version 2022-05-30
  */
 @Table(name="payment_plan", alias="a", label="收款计划信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),
@@ -24,11 +24,6 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="payment_sum_ca", attrName="paymentSumCa", label="收款金额大写"),
 		@Column(name="payment_contract", attrName="paymentContract", label="所属合同"),
 		@Column(name="first_unit", attrName="firstUnit", label="甲方单位"),
-		@Column(name="penalty", attrName="penalty", label="罚款"),
-		@Column(name="cut_payment", attrName="cutPayment", label="扣款"),
-		@Column(name="payment_has_sum", attrName="paymentHasSum", label="已收款金额"),
-		@Column(name="invoice_sum", attrName="invoiceSum", label="已开票金额"),
-		@Column(name="acc_name", attrName="accName", label="帐号名称", queryType=QueryType.LIKE),
 		@Column(name="bank_acc", attrName="bankAcc", label="银行账户"),
 		@Column(name="sign_date", attrName="signDate", label="签订日期"),
 		@Column(name="informant_user", attrName="informantUser", label="填报人"),
@@ -46,11 +41,6 @@ public class PaymentPlan extends DataEntity<PaymentPlan> {
 	private String paymentSumCa;		// 收款金额大写
 	private String paymentContract;		// 所属合同
 	private String firstUnit;		// 甲方单位
-	private String penalty;		// 罚款
-	private String cutPayment;		// 扣款
-	private String paymentHasSum;		// 已收款金额
-	private String invoiceSum;		// 已开票金额
-	private String accName;		// 帐号名称
 	private String bankAcc;		// 银行账户
 	private String signDate;		// 签订日期
 	private String informantUser;		// 填报人
@@ -132,51 +122,6 @@ public class PaymentPlan extends DataEntity<PaymentPlan> {
 
 	public void setFirstUnit(String firstUnit) {
 		this.firstUnit = firstUnit;
-	}
-	
-	@Length(min=0, max=200, message="罚款长度不能超过 200 个字符")
-	public String getPenalty() {
-		return penalty;
-	}
-
-	public void setPenalty(String penalty) {
-		this.penalty = penalty;
-	}
-	
-	@Length(min=0, max=50, message="扣款长度不能超过 50 个字符")
-	public String getCutPayment() {
-		return cutPayment;
-	}
-
-	public void setCutPayment(String cutPayment) {
-		this.cutPayment = cutPayment;
-	}
-	
-	@Length(min=0, max=50, message="已收款金额长度不能超过 50 个字符")
-	public String getPaymentHasSum() {
-		return paymentHasSum;
-	}
-
-	public void setPaymentHasSum(String paymentHasSum) {
-		this.paymentHasSum = paymentHasSum;
-	}
-	
-	@Length(min=0, max=50, message="已开票金额长度不能超过 50 个字符")
-	public String getInvoiceSum() {
-		return invoiceSum;
-	}
-
-	public void setInvoiceSum(String invoiceSum) {
-		this.invoiceSum = invoiceSum;
-	}
-	
-	@Length(min=0, max=50, message="帐号名称长度不能超过 50 个字符")
-	public String getAccName() {
-		return accName;
-	}
-
-	public void setAccName(String accName) {
-		this.accName = accName;
 	}
 	
 	@Length(min=0, max=50, message="银行账户长度不能超过 50 个字符")

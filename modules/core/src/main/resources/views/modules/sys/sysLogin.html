@@ -6,14 +6,17 @@
 <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysLogin.css?${_version}">
 <style>
 
-	.wrapper {
-		background: linear-gradient(360deg, #49b8ff 0%, #c0e7ff 100%);
+	.wrapper{
+		background: linear-gradient(360deg, #49b8ff 0%, #c0e7ff 70%);
 	}
-
+	html{
+		background: linear-gradient(360deg, #49b8ff 70%, #c0e7ff 100%);
+	}
 </style>
 
 <div class="login-box" style="margin:7% auto 300px auto;">
 	<div class="login-logo">
+		<img src="${ctxStatic}/images/logo.png" style="height: 55px;width: 60px;margin-left: -12px;" alt="logo">
 		<a href="${ctx}/login"><b>${@Global.getConfig('productName')}</b>
 			<small>${@Global.getConfig('productVersion')}</small></a>
 	</div>
@@ -22,7 +25,7 @@
 		<% if(isLoginByValidCode){ %>
 			<ul id="loginTab" class="nav nav-tabs">
 				<li class="active"><a href="#tab-1" data-toggle="tab" action="${ctx}/login">${text('账号登录')}</a></li>
-				<li><a href="#tab-2" data-toggle="tab" action="${ctxPath}/account/loginByValidCode">${text('手机登录')}</a></li>
+				<!--<li><a href="#tab-2" data-toggle="tab" action="${ctxPath}/account/loginByValidCode">${text('手机登录')}</a></li>-->
 				<% if(isNotBlank(@Global.getConfig('shiro.ldapUrl'))){ %>
 					<li><a href="#tab-3" data-toggle="tab" action="${ctx}/login-ldap">${text('LDAP登录')}</a></li>
 				<% } %>
@@ -70,7 +73,7 @@
 				<div class="mt5 icheck">
 					<label title="${text('公共场所慎用,下次不需要再填写帐号')}"><input type="checkbox"
 						name="rememberUserCode"${isNotBlank(cookie('rememberUserCode'))?' checked':''}
-						class="form-control" data-style="minimal-grey"> ${text('记住账号')}</label> &nbsp; 
+						class="form-control" data-style="minimal-grey"> ${text('记住账号')}</label> &nbsp;
 					<label title="${text('公共场所慎用,下次不需要再填写帐号和密码')}"><input type="checkbox"
 						name="rememberMe"${isNotBlank(cookie('rememberMe'))?' checked':''}
 						class="form-control" data-style="minimal-grey"> ${text('自动登录')}</label>

@@ -15,15 +15,16 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 生产管理Entity
  * @author wang_bo
- * @version 2022-05-24
+ * @version 2022-05-30
  */
 @Table(name="production_manager", alias="a", label="生产管理信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),
 		@Column(name="production_project", attrName="productionProject", label="关联项目"),
-		@Column(name="production_manu", attrName="productionManu", label="生产厂家"),
+		@Column(name="production_manu", attrName="productionManu", label="生产厂商"),
 		@Column(name="production_user", attrName="productionUser", label="填报人"),
 		@Column(name="production_status", attrName="productionStatus", label="任务状态"),
-		@Column(name="plan_date", attrName="planDate", label="计划完成日期"),
+		@Column(name="plan_start_date", attrName="planStartDate", label="计划开始日期"),
+		@Column(name="plan_end_date", attrName="planEndDate", label="计划完成日期"),
 		@Column(includeEntity=DataEntity.class),
 	}, orderBy="a.update_date DESC"
 )
@@ -32,12 +33,13 @@ public class ProductionManager extends DataEntity<ProductionManager> {
 	private static final long serialVersionUID = 1L;
 	private String numCode;		// 编号
 	private String productionProject;		// 关联项目
-	private String productionManu;		// 生产厂家
+	private String productionManu;		// 生产厂商
 	private String productionUser;		// 填报人
 	private String productionStatus;		// 任务状态
-	private String planDate;		// 计划完成日期
-	private List<DesignProductProduction> designProductProductionList = ListUtils.newArrayList();		// 子表列表
-	private List<DesignPaperProduction> designPaperProductionList = ListUtils.newArrayList();		// 子表列表
+	private String planStartDate;		// 计划开始日期
+	private String planEndDate;		// 计划完成日期
+	private List<DesignDDD> designDDDList = ListUtils.newArrayList();		// 子表列表
+	private List<DesignPPP> designPPPList = ListUtils.newArrayList();		// 子表列表
 	
 	public ProductionManager() {
 		this(null);
@@ -64,7 +66,7 @@ public class ProductionManager extends DataEntity<ProductionManager> {
 		this.productionProject = productionProject;
 	}
 	
-	@Length(min=0, max=200, message="生产厂家长度不能超过 200 个字符")
+	@Length(min=0, max=200, message="生产厂商长度不能超过 200 个字符")
 	public String getProductionManu() {
 		return productionManu;
 	}
@@ -91,29 +93,38 @@ public class ProductionManager extends DataEntity<ProductionManager> {
 		this.productionStatus = productionStatus;
 	}
 	
+	@Length(min=0, max=200, message="计划开始日期长度不能超过 200 个字符")
+	public String getPlanStartDate() {
+		return planStartDate;
+	}
+
+	public void setPlanStartDate(String planStartDate) {
+		this.planStartDate = planStartDate;
+	}
+	
 	@Length(min=0, max=200, message="计划完成日期长度不能超过 200 个字符")
-	public String getPlanDate() {
-		return planDate;
+	public String getPlanEndDate() {
+		return planEndDate;
 	}
 
-	public void setPlanDate(String planDate) {
-		this.planDate = planDate;
+	public void setPlanEndDate(String planEndDate) {
+		this.planEndDate = planEndDate;
 	}
 	
-	public List<DesignProductProduction> getDesignProductProductionList() {
-		return designProductProductionList;
+	public List<DesignDDD> getDesignDDDList() {
+		return designDDDList;
 	}
 
-	public void setDesignProductProductionList(List<DesignProductProduction> designProductProductionList) {
-		this.designProductProductionList = designProductProductionList;
+	public void setDesignDDDList(List<DesignDDD> designDDDList) {
+		this.designDDDList = designDDDList;
 	}
 	
-	public List<DesignPaperProduction> getDesignPaperProductionList() {
-		return designPaperProductionList;
+	public List<DesignPPP> getDesignPPPList() {
+		return designPPPList;
 	}
 
-	public void setDesignPaperProductionList(List<DesignPaperProduction> designPaperProductionList) {
-		this.designPaperProductionList = designPaperProductionList;
+	public void setDesignPPPList(List<DesignPPP> designPPPList) {
+		this.designPPPList = designPPPList;
 	}
 	
 }

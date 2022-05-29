@@ -20,14 +20,14 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.production.entity.ProductionManager;
-import com.jeesite.modules.production.entity.DesignProductProduction;
-import com.jeesite.modules.production.entity.DesignPaperProduction;
+import com.jeesite.modules.production.entity.DesignDDD;
+import com.jeesite.modules.production.entity.DesignPPP;
 import com.jeesite.modules.production.service.ProductionManagerService;
 
 /**
  * 生产管理Controller
  * @author wang_bo
- * @version 2022-05-24
+ * @version 2022-05-30
  */
 @Controller
 @RequestMapping(value = "${adminPath}/production/productionManager")
@@ -70,11 +70,11 @@ public class ProductionManagerController extends BaseController {
 	 * 查询子表数据
 	 */
 	@RequiresPermissions("production:productionManager:view")
-	@RequestMapping(value = "designProductProductionListData")
+	@RequestMapping(value = "designDDDListData")
 	@ResponseBody
-	public Page<DesignProductProduction> subListData(DesignProductProduction designProductProduction, HttpServletRequest request, HttpServletResponse response) {
-		designProductProduction.setPage(new Page<>(request, response));
-		Page<DesignProductProduction> page = productionManagerService.findSubPage(designProductProduction);
+	public Page<DesignDDD> subListData(DesignDDD designDDD, HttpServletRequest request, HttpServletResponse response) {
+		designDDD.setPage(new Page<>(request, response));
+		Page<DesignDDD> page = productionManagerService.findSubPage(designDDD);
 		return page;
 	}
 	
@@ -82,11 +82,11 @@ public class ProductionManagerController extends BaseController {
 	 * 查询子表数据
 	 */
 	@RequiresPermissions("production:productionManager:view")
-	@RequestMapping(value = "designPaperProductionListData")
+	@RequestMapping(value = "designPPPListData")
 	@ResponseBody
-	public Page<DesignPaperProduction> subListData(DesignPaperProduction designPaperProduction, HttpServletRequest request, HttpServletResponse response) {
-		designPaperProduction.setPage(new Page<>(request, response));
-		Page<DesignPaperProduction> page = productionManagerService.findSubPage(designPaperProduction);
+	public Page<DesignPPP> subListData(DesignPPP designPPP, HttpServletRequest request, HttpServletResponse response) {
+		designPPP.setPage(new Page<>(request, response));
+		Page<DesignPPP> page = productionManagerService.findSubPage(designPPP);
 		return page;
 	}
 

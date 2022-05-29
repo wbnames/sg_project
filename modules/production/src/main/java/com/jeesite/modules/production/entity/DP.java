@@ -1,12 +1,9 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.modules.design.entity;
+package com.jeesite.modules.production.entity;
 
-import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
-import java.util.List;
-import com.jeesite.common.collect.ListUtils;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -14,13 +11,13 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
 /**
- * 设计图纸Entity
+ * 生产管理Entity
  * @author wang_bo
  * @version 2022-05-30
  */
-@Table(name="design_paper", alias="a", label="设计图纸信息", columns={
+@Table(name="design_paper", alias="a", label="生产管理信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),
-		@Column(name="production_code", attrName="productionCode", label="编号"),
+		@Column(name="production_code", attrName="productionCode.numCode", label="编号"),
 		@Column(name="design_paper_name", attrName="designPaperName", label="设计图纸名称", queryType=QueryType.LIKE),
 		@Column(name="design_project", attrName="designProject", label="所属项目"),
 		@Column(name="design_contractl", attrName="designContractl", label="所属合同"),
@@ -28,27 +25,27 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="sub_user", attrName="subUser", label="填报人"),
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="constru_id", attrName="construId", label="constru_id"),
-	}, orderBy="a.update_date DESC"
+	}, orderBy="a.create_date ASC"
 )
-public class DesignPaper extends DataEntity<DesignPaper> {
+public class DP extends DataEntity<DP> {
 	
 	private static final long serialVersionUID = 1L;
 	private String numCode;		// 编号
-	private String productionCode;		// 编号
+	private ProductionManager productionCode;		// 编号 父类
 	private String designPaperName;		// 设计图纸名称
 	private String designProject;		// 所属项目
 	private String designContractl;		// 所属合同
 	private String designDate;		// 日期
 	private String subUser;		// 填报人
 	private String construId;		// constru_id
-	private List<DesignPP> designPPList = ListUtils.newArrayList();		// 子表列表
 	
-	public DesignPaper() {
+	public DP() {
 		this(null);
 	}
 
-	public DesignPaper(String id){
-		super(id);
+
+	public DP(ProductionManager productionCode){
+		this.productionCode = productionCode;
 	}
 	
 	public String getNumCode() {
@@ -59,13 +56,12 @@ public class DesignPaper extends DataEntity<DesignPaper> {
 		this.numCode = numCode;
 	}
 	
-	@NotBlank(message="编号不能为空")
 	@Length(min=0, max=200, message="编号长度不能超过 200 个字符")
-	public String getProductionCode() {
+	public ProductionManager getProductionCode() {
 		return productionCode;
 	}
 
-	public void setProductionCode(String productionCode) {
+	public void setProductionCode(ProductionManager productionCode) {
 		this.productionCode = productionCode;
 	}
 	
@@ -121,14 +117,6 @@ public class DesignPaper extends DataEntity<DesignPaper> {
 
 	public void setConstruId(String construId) {
 		this.construId = construId;
-	}
-	
-	public List<DesignPP> getDesignPPList() {
-		return designPPList;
-	}
-
-	public void setDesignPPList(List<DesignPP> designPPList) {
-		this.designPPList = designPPList;
 	}
 	
 }

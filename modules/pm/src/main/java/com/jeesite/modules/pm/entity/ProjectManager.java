@@ -15,7 +15,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 项目管理Entity
  * @author wang_bo
- * @version 2022-05-23
+ * @version 2022-05-30
  */
 @Table(name="project_manager", alias="a", label="项目管理信息", columns={
 		@Column(name="serial_number", attrName="serialNumber", label="序号", isPK=true),

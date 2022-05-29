@@ -10,7 +10,7 @@ import com.jeesite.modules.pm.entity.ProjectManager;
 /**
  * 项目管理DAO接口
  * @author wang_bo
- * @version 2022-05-23
+ * @version 2022-05-30
  */
 @MyBatisDao
 public interface ProjectManagerDao extends CrudDao<ProjectManager> {

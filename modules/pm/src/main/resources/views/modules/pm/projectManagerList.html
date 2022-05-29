@@ -44,8 +44,8 @@
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('工程状态')}：</label>
-					<div class="control-inline">
-						<#form:input path="projectStatus" maxlength="200" class="form-control width-120"/>
+					<div class="control-inline width-120">
+						<#form:select path="projectStatus" dictType="constru_task_status" blankOption="true" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -94,7 +94,9 @@ $('#dataGrid').dataGrid({
 		{header:'${text("项目名称")}', name:'name', index:'a.name', width:150, align:"left"},
 		{header:'${text("所在区域")}', name:'', index:'a.area', width:150, align:"center"},
 		{header:'${text("行业监管单位")}', name:'regulators', index:'a.regulators', width:150, align:"left"},
-		{header:'${text("工程状态")}', name:'projectStatus', index:'a.project_status', width:150, align:"left"},
+		{header:'${text("工程状态")}', name:'projectStatus', index:'a.project_status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('constru_task_status')}, val, '${text("未知")}', true);
+		}},
 		{header:'${text("建设单位")}', name:'constructionUnit', index:'a.construction_unit', width:150, align:"left"},
 		{header:'${text("总承包建设单位")}', name:'mainContractor', index:'a.main_contractor', width:150, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
