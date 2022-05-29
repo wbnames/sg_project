@@ -17,36 +17,72 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> ${text('产品分类代码')}：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('产品名称')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="pmCode" maxlength="64" class="form-control"/>
+								<#form:input path="pmName" maxlength="64" class="form-control"/>
 							</div>
 						</div>
 					</div>
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> ${text('产品单位')}：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('位置')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="pmUnit" maxlength="64" class="form-control"/>
+								<#form:input path="pmLocation" maxlength="64" class="form-control"/>
 							</div>
 						</div>
 					</div>
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> ${text('产品数量')}：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('颜色')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="pmConut" maxlength="128" class="form-control digits"/>
+								<#form:input path="pmColor" maxlength="128" class="form-control digits"/>
 							</div>
 						</div>
 					</div>
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> ${text('产品尺寸')}：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('厚度')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="pmSize" maxlength="128" class="form-control"/>
+								<#form:input path="pmThickness" maxlength="128" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('规格')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="pmSpec" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('单价面积')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="pmArea" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('数量')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="pmCount" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('合计面积')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="pmTotalArea" maxlength="255" class="form-control"/>
 							</div>
 						</div>
 					</div>
@@ -55,9 +91,31 @@
 					<div class="col-xs-12">
 						<div class="form-group">
 							<label class="control-label col-sm-2" title="">
-								<span class="required hide">*</span> ${text('备注信息')}：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('备注1')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-10">
-								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/>
+								<#form:textarea path="remarks1" rows="4" maxlength="500" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('备注2')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="remarks2" rows="4" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('备注3')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="remarks3" rows="4" maxlength="255" class="form-control"/>
 							</div>
 						</div>
 					</div>

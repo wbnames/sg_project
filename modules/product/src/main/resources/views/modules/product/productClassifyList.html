@@ -17,27 +17,54 @@
 			<#form:form id="searchForm" model="${productClassify}" action="${ctx}/product/productClassify/listData" method="post" class="form-inline hide"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
-					<label class="control-label">${text('产品分类代码')}：</label>
+					<label class="control-label">${text('产品编号')}：</label>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('产品名称')}：</label>
 					<div class="control-inline">
-						<#form:input path="pmCode" maxlength="64" class="form-control width-120"/>
+						<#form:input path="pmName" maxlength="64" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">${text('产品单位')}：</label>
+					<label class="control-label">${text('位置')}：</label>
 					<div class="control-inline">
-						<#form:input path="pmUnit" maxlength="64" class="form-control width-120"/>
+						<#form:input path="pmLocation" maxlength="64" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">${text('产品数量')}：</label>
+					<label class="control-label">${text('颜色')}：</label>
 					<div class="control-inline">
-						<#form:input path="pmConut" maxlength="128" class="form-control width-120"/>
+						<#form:input path="pmColor" maxlength="128" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">${text('产品尺寸')}：</label>
+					<label class="control-label">${text('厚度')}：</label>
 					<div class="control-inline">
-						<#form:input path="pmSize" maxlength="128" class="form-control width-120"/>
+						<#form:input path="pmThickness" maxlength="128" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('规格')}：</label>
+					<div class="control-inline">
+						<#form:input path="pmSpec" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('单价面积')}：</label>
+					<div class="control-inline">
+						<#form:input path="pmArea" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('数量')}：</label>
+					<div class="control-inline">
+						<#form:input path="pmCount" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('合计面积')}：</label>
+					<div class="control-inline">
+						<#form:input path="pmTotalArea" maxlength="255" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -47,9 +74,21 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">${text('备注信息')}：</label>
+					<label class="control-label">${text('备注1')}：</label>
 					<div class="control-inline">
-						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+						<#form:input path="remarks1" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注2')}：</label>
+					<div class="control-inline">
+						<#form:input path="remarks2" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注3')}：</label>
+					<div class="control-inline">
+						<#form:input path="remarks3" maxlength="255" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -68,18 +107,21 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'${text("编号")}', name:'numCode', index:'a.num_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+		{header:'${text("产品编号")}', name:'numCode', index:'a.num_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/product/productClassify/form?numCode='+row.numCode+'" class="btnList" data-title="${text("编辑产品分类")}">'+(val||row.id)+'</a>';
 		}},
-		{header:'${text("产品分类代码")}', name:'pmCode', index:'a.pm_code', width:150, align:"left"},
-		{header:'${text("产品单位")}', name:'pmUnit', index:'a.pm_unit', width:150, align:"left"},
-		{header:'${text("产品数量")}', name:'pmConut', index:'a.pm_conut', width:150, align:"center"},
-		{header:'${text("产品尺寸")}', name:'pmSize', index:'a.pm_size', width:150, align:"left"},
+		{header:'${text("产品名称")}', name:'pmName', index:'a.pm_name', width:150, align:"left"},
+		{header:'${text("位置")}', name:'pmLocation', index:'a.pm_location', width:150, align:"left"},
+		{header:'${text("颜色")}', name:'pmColor', index:'a.pm_color', width:150, align:"center"},
+		{header:'${text("厚度")}', name:'pmThickness', index:'a.pm_thickness', width:150, align:"left"},
+		{header:'${text("规格")}', name:'pmSpec', index:'a.pm_spec', width:150, align:"left"},
+		{header:'${text("单价面积")}', name:'pmArea', index:'a.pm_area', width:150, align:"left"},
+		{header:'${text("数量")}', name:'pmCount', index:'a.pm_count', width:150, align:"left"},
+		{header:'${text("合计面积")}', name:'pmTotalArea', index:'a.pm_total_area', width:150, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
 		}},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
-		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
 		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('product:productClassify:edit')){ %>

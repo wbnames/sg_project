@@ -10,7 +10,7 @@ import com.jeesite.modules.product.entity.ProductClassify;
 /**
  * 产品分类DAO接口
  * @author lyu
- * @version 2022-05-24
+ * @version 2022-05-26
  */
 @MyBatisDao
 public interface ProductClassifyDao extends CrudDao<ProductClassify> {

@@ -25,7 +25,7 @@ import com.jeesite.modules.constru.service.ConstruTaskLogService;
 /**
  * 施工日志Controller
  * @author lyu
- * @version 2022-05-24
+ * @version 2022-05-26
  */
 @Controller
 @RequestMapping(value = "${adminPath}/constru/construTaskLog")

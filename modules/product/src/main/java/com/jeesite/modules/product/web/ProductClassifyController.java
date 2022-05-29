@@ -25,7 +25,7 @@ import com.jeesite.modules.product.service.ProductClassifyService;
 /**
  * 产品分类Controller
  * @author lyu
- * @version 2022-05-24
+ * @version 2022-05-26
  */
 @Controller
 @RequestMapping(value = "${adminPath}/product/productClassify")
