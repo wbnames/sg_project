@@ -22,6 +22,11 @@
 		<module>../modules/logistics</module>
 		<module>../modules/production</module>
 		<module>../modules/design</module>
+		<module>../modules/ccm</module>
+		<module>../modules/clientmana</module>
+		<module>../modules/product</module>
+		<module>../modules/constru</module>
+		<module>../modules/factmana</module>
         <module>../web</module>
     </modules>
 	

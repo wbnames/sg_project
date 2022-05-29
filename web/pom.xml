@@ -70,6 +70,37 @@
 			<artifactId>jeesite-module-logistics</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<!--施工商管理 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-ccm</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!--客户管理 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-clientmana</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<!--产品管理 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-product</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<!--施工管理 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-constru</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<!--厂商管理 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-factmana</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 		<!-- 在线文档接口 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
