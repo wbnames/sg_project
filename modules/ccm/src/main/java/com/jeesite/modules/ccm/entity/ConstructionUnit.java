@@ -13,7 +13,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 施工单位Entity
  * @author lyu
- * @version 2022-05-24
+ * @version 2022-05-30
  */
 @Table(name="construction_unit", alias="a", label="施工单位信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),

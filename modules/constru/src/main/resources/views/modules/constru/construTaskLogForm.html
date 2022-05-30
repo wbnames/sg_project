@@ -19,7 +19,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('施工任务')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="construTaskId" maxlength="64" class="form-control"/>
+								<#form:select path="construTaskId" dictType="" blankOption="true" class="form-control" />
 							</div>
 						</div>
 					</div>
@@ -89,7 +89,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('所属项目')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="product" maxlength="64" class="form-control"/>
+								<#form:select path="product" dictType="" blankOption="true" class="form-control" />
 							</div>
 						</div>
 					</div>

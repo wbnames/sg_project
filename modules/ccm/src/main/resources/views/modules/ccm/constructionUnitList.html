@@ -30,8 +30,10 @@
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('所在区域')}：</label>
-					<div class="control-inline">
-						<#form:input path="area" maxlength="128" class="form-control width-120"/>
+					<div class="control-inline width-120" >
+						<#form:treeselect id="area" title="${text('区域选择')}"
+							path="area" labelPath="" 
+							url="${ctx}/sys/area/treeData" allowClear="true"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -78,7 +80,7 @@ $('#dataGrid').dataGrid({
 			return '<a href="${ctx}/ccm/constructionUnit/form?numCode='+row.numCode+'" class="btnList" data-title="${text("编辑施工单位")}">'+(val||row.id)+'</a>';
 		}},
 		{header:'${text("单位名称")}', name:'name', index:'a.name', width:150, align:"left"},
-		{header:'${text("所在区域")}', name:'area', index:'a.area', width:150, align:"left"},
+		{header:'${text("所在区域")}', name:'', index:'a.area', width:150, align:"center"},
 		{header:'${text("详细地址")}', name:'address', index:'a.address', width:150, align:"left"},
 		{header:'${text("联系电话")}', name:'phone', index:'a.phone', width:150, align:"center"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){

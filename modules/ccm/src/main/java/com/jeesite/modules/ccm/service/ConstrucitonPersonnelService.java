@@ -10,11 +10,12 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.ccm.entity.ConstrucitonPersonnel;
 import com.jeesite.modules.ccm.dao.ConstrucitonPersonnelDao;
+import com.jeesite.modules.file.utils.FileUploadUtils;
 
 /**
  * 施工人员Service
  * @author lyu
- * @version 2022-05-24
+ * @version 2022-05-30
  */
 @Service
 @Transactional(readOnly=true)
@@ -49,6 +50,8 @@ public class ConstrucitonPersonnelService extends CrudService<ConstrucitonPerson
 	@Transactional(readOnly=false)
 	public void save(ConstrucitonPersonnel construcitonPersonnel) {
 		super.save(construcitonPersonnel);
+		// 保存上传图片
+		FileUploadUtils.saveFileUpload(construcitonPersonnel, construcitonPersonnel.getId(), "construcitonPersonnel_image");
 	}
 	
 	/**

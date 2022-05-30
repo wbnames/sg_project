@@ -18,8 +18,8 @@
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
 					<label class="control-label">${text('施工任务')}：</label>
-					<div class="control-inline">
-						<#form:input path="construTaskId" maxlength="64" class="form-control width-120"/>
+					<div class="control-inline width-120">
+						<#form:select path="construTaskId" dictType="" blankOption="true" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -61,8 +61,8 @@
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('所属项目')}：</label>
-					<div class="control-inline">
-						<#form:input path="product" maxlength="64" class="form-control width-120"/>
+					<div class="control-inline width-120">
+						<#form:select path="product" dictType="" blankOption="true" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -116,7 +116,9 @@ $('#dataGrid').dataGrid({
 		{header:'${text("填报人")}', name:'recordUser', index:'a.record_user', width:150, align:"left"},
 		{header:'${text("施工进展")}', name:'construProgress', index:'a.constru_progress', width:150, align:"left"},
 		{header:'${text("施工有关主要工作")}', name:'construWork', index:'a.constru_work', width:150, align:"left"},
-		{header:'${text("所属项目")}', name:'product', index:'a.product', width:150, align:"left"},
+		{header:'${text("所属项目")}', name:'product', index:'a.product', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
 		}},

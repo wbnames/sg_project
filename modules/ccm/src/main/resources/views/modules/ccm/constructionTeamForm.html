@@ -12,17 +12,8 @@
 		<#form:form id="inputForm" model="${constructionTeam}" action="${ctx}/ccm/constructionTeam/save" method="post" class="form-horizontal">
 			<div class="box-body">
 				<div class="form-unit">${text('基本信息')}</div>
+				<#form:hidden path="numCode"/>
 				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> ${text('编号')}：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:hidden path="isNewRecord"/>
-							<#form:input path="numCode" maxlength="64" readonly="${!constructionTeam.isNewRecord}" class="form-control required abc"/>
-							</div>
-						</div>
-					</div>
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
@@ -37,7 +28,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('班组长名称')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="leader" maxlength="64" class="form-control"/>
+								<#form:select path="leader" dictType="" blankOption="true" class="form-control" />
 							</div>
 						</div>
 					</div>
@@ -55,7 +46,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('项目名称')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="projectName" maxlength="64" class="form-control"/>
+								<#form:select path="projectName" dictType="" blankOption="true" class="form-control" />
 							</div>
 						</div>
 					</div>
@@ -64,7 +55,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('所属企业')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="company" maxlength="64" class="form-control"/>
+								<#form:select path="company" dictType="" blankOption="true" class="form-control" />
 							</div>
 						</div>
 					</div>

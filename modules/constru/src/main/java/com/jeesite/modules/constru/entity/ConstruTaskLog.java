@@ -17,7 +17,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 施工日志Entity
  * @author lyu
- * @version 2022-05-26
+ * @version 2022-05-30
  */
 @Table(name="constru_task_log", alias="a", label="施工日志信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),

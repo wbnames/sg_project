@@ -37,7 +37,10 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('所在区域')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="area" maxlength="128" class="form-control"/>
+								<#form:treeselect id="area" title="${text('区域选择')}"
+									path="area" labelPath=""
+									url="${ctx}/sys/area/treeData"
+									class="" allowClear="true"/>
 							</div>
 						</div>
 					</div>

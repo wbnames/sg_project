@@ -10,7 +10,7 @@ import com.jeesite.modules.ccm.entity.ConstructionUnit;
 /**
  * 施工单位DAO接口
  * @author lyu
- * @version 2022-05-24
+ * @version 2022-05-30
  */
 @MyBatisDao
 public interface ConstructionUnitDao extends CrudDao<ConstructionUnit> {
