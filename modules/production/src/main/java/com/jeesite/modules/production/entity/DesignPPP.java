@@ -14,7 +14,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 生产管理Entity
  * @author wang_bo
- * @version 2022-05-30
+ * @version 2022-06-06
  */
 @Table(name="design_product", alias="a", label="生产管理信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),

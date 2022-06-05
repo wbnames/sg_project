@@ -4,6 +4,10 @@
 package com.jeesite.modules.production.entity;
 
 import org.hibernate.validator.constraints.Length;
+import java.util.Date;
+import com.jeesite.common.mybatis.annotation.JoinTable;
+import com.jeesite.common.mybatis.annotation.JoinTable.Type;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.List;
 import com.jeesite.common.collect.ListUtils;
 
@@ -15,7 +19,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 生产管理Entity
  * @author wang_bo
- * @version 2022-05-30
+ * @version 2022-06-06
  */
 @Table(name="production_manager", alias="a", label="生产管理信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),
@@ -36,10 +40,10 @@ public class ProductionManager extends DataEntity<ProductionManager> {
 	private String productionManu;		// 生产厂商
 	private String productionUser;		// 填报人
 	private String productionStatus;		// 任务状态
-	private String planStartDate;		// 计划开始日期
-	private String planEndDate;		// 计划完成日期
-	private List<DesignDDD> designDDDList = ListUtils.newArrayList();		// 子表列表
+	private Date planStartDate;		// 计划开始日期
+	private Date planEndDate;		// 计划完成日期
 	private List<DesignPPP> designPPPList = ListUtils.newArrayList();		// 子表列表
+	private List<DesignDDD> designDDDList = ListUtils.newArrayList();		// 子表列表
 	
 	public ProductionManager() {
 		this(null);
@@ -93,30 +97,22 @@ public class ProductionManager extends DataEntity<ProductionManager> {
 		this.productionStatus = productionStatus;
 	}
 	
-	@Length(min=0, max=200, message="计划开始日期长度不能超过 200 个字符")
-	public String getPlanStartDate() {
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getPlanStartDate() {
 		return planStartDate;
 	}
 
-	public void setPlanStartDate(String planStartDate) {
+	public void setPlanStartDate(Date planStartDate) {
 		this.planStartDate = planStartDate;
 	}
 	
-	@Length(min=0, max=200, message="计划完成日期长度不能超过 200 个字符")
-	public String getPlanEndDate() {
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getPlanEndDate() {
 		return planEndDate;
 	}
 
-	public void setPlanEndDate(String planEndDate) {
+	public void setPlanEndDate(Date planEndDate) {
 		this.planEndDate = planEndDate;
-	}
-	
-	public List<DesignDDD> getDesignDDDList() {
-		return designDDDList;
-	}
-
-	public void setDesignDDDList(List<DesignDDD> designDDDList) {
-		this.designDDDList = designDDDList;
 	}
 	
 	public List<DesignPPP> getDesignPPPList() {
@@ -125,6 +121,14 @@ public class ProductionManager extends DataEntity<ProductionManager> {
 
 	public void setDesignPPPList(List<DesignPPP> designPPPList) {
 		this.designPPPList = designPPPList;
+	}
+	
+	public List<DesignDDD> getDesignDDDList() {
+		return designDDDList;
+	}
+
+	public void setDesignDDDList(List<DesignDDD> designDDDList) {
+		this.designDDDList = designDDDList;
 	}
 	
 }

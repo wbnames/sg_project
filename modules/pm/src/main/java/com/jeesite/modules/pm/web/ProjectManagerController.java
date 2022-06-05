@@ -20,13 +20,12 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.pm.entity.ProjectManager;
-import com.jeesite.modules.pm.entity.ProjectManagerUser;
 import com.jeesite.modules.pm.service.ProjectManagerService;
 
 /**
  * 项目管理Controller
  * @author wang_bo
- * @version 2022-05-30
+ * @version 2022-06-06
  */
 @Controller
 @RequestMapping(value = "${adminPath}/pm/projectManager")
@@ -62,18 +61,6 @@ public class ProjectManagerController extends BaseController {
 	public Page<ProjectManager> listData(ProjectManager projectManager, HttpServletRequest request, HttpServletResponse response) {
 		projectManager.setPage(new Page<>(request, response));
 		Page<ProjectManager> page = projectManagerService.findPage(projectManager);
-		return page;
-	}
-	
-	/**
-	 * 查询子表数据
-	 */
-	@RequiresPermissions("pm:projectManager:view")
-	@RequestMapping(value = "projectManagerUserListData")
-	@ResponseBody
-	public Page<ProjectManagerUser> subListData(ProjectManagerUser projectManagerUser, HttpServletRequest request, HttpServletResponse response) {
-		projectManagerUser.setPage(new Page<>(request, response));
-		Page<ProjectManagerUser> page = projectManagerService.findSubPage(projectManagerUser);
 		return page;
 	}
 

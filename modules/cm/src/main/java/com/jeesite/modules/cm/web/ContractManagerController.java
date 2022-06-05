@@ -25,7 +25,7 @@ import com.jeesite.modules.cm.service.ContractManagerService;
 /**
  * 合同管理Controller
  * @author wang_bo
- * @version 2022-05-23
+ * @version 2022-06-06
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cm/contractManager")

@@ -10,7 +10,7 @@ import com.jeesite.modules.constru.entity.ConstructionTeamCopy1;
 /**
  * 施工任务DAO接口
  * @author lyu
- * @version 2022-05-24
+ * @version 2022-06-06
  */
 @MyBatisDao
 public interface ConstructionTeamCopy1Dao extends CrudDao<ConstructionTeamCopy1> {

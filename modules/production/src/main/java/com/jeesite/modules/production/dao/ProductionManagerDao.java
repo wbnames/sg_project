@@ -10,7 +10,7 @@ import com.jeesite.modules.production.entity.ProductionManager;
 /**
  * 生产管理DAO接口
  * @author wang_bo
- * @version 2022-05-30
+ * @version 2022-06-06
  */
 @MyBatisDao
 public interface ProductionManagerDao extends CrudDao<ProductionManager> {

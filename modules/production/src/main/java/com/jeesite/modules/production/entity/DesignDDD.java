@@ -5,6 +5,10 @@ package com.jeesite.modules.production.entity;
 
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
+import java.util.Date;
+import com.jeesite.common.mybatis.annotation.JoinTable;
+import com.jeesite.common.mybatis.annotation.JoinTable.Type;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -14,7 +18,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 生产管理Entity
  * @author wang_bo
- * @version 2022-05-30
+ * @version 2022-06-06
  */
 @Table(name="design_paper", alias="a", label="生产管理信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),
@@ -36,7 +40,7 @@ public class DesignDDD extends DataEntity<DesignDDD> {
 	private String designPaperName;		// 设计图纸名称
 	private String designProject;		// 所属项目
 	private String designContractl;		// 所属合同
-	private String designDate;		// 日期
+	private Date designDate;		// 日期
 	private String subUser;		// 填报人
 	private String construId;		// constru_id
 	
@@ -94,12 +98,12 @@ public class DesignDDD extends DataEntity<DesignDDD> {
 		this.designContractl = designContractl;
 	}
 	
-	@Length(min=0, max=200, message="日期长度不能超过 200 个字符")
-	public String getDesignDate() {
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getDesignDate() {
 		return designDate;
 	}
 
-	public void setDesignDate(String designDate) {
+	public void setDesignDate(Date designDate) {
 		this.designDate = designDate;
 	}
 	
