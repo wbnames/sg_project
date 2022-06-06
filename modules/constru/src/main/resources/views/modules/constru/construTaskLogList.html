@@ -1,0 +1,148 @@
+<% layout('/layouts/default.html', {title: '施工日志管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('施工日志管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('constru:construTaskLog:edit')){ %>
+					<a href="${ctx}/constru/construTaskLog/form" class="btn btn-default btnTool" title="${text('新增施工日志')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${construTaskLog}" action="${ctx}/constru/construTaskLog/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('施工任务')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="construTaskId" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('日志主题')}：</label>
+					<div class="control-inline">
+						<#form:input path="subject" maxlength="128" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('登记日期')}：</label>
+					<div class="control-inline">
+						<#form:input path="recordDate" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+							dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('工时')}：</label>
+					<div class="control-inline">
+						<#form:input path="manHour" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('填报人')}：</label>
+					<div class="control-inline">
+						<#form:input path="recordUser" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('施工进展')}：</label>
+					<div class="control-inline">
+						<#form:input path="construProgress" maxlength="512" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('施工有关主要工作')}：</label>
+					<div class="control-inline">
+						<#form:input path="construWork" maxlength="1024" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('所属项目')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="product" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('创建者')}：</label>
+					<div class="control-inline">
+						<#form:input path="createBy" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('创建时间')}：</label>
+					<div class="control-inline">
+						<#form:input path="createDate" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注信息')}：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("施工任务")}', name:'construTaskId', index:'a.constru_task_id', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/constru/construTaskLog/form?numCode='+row.numCode+'" class="btnList" data-title="${text("编辑施工日志")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("日志主题")}', name:'subject', index:'a.subject', width:150, align:"left"},
+		{header:'${text("登记日期")}', name:'recordDate', index:'a.record_date', width:150, align:"center"},
+		{header:'${text("工时")}', name:'manHour', index:'a.man_hour', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+		{header:'${text("填报人")}', name:'recordUser', index:'a.record_user', width:150, align:"left"},
+		{header:'${text("施工进展")}', name:'construProgress', index:'a.constru_progress', width:150, align:"left"},
+		{header:'${text("施工有关主要工作")}', name:'construWork', index:'a.constru_work', width:150, align:"left"},
+		{header:'${text("所属项目")}', name:'product', index:'a.product', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("创建者")}', name:'createBy', index:'a.create_by', width:150, align:"left"},
+		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('constru:construTaskLog:edit')){ %>
+				actions.push('<a href="${ctx}/constru/construTaskLog/form?numCode='+row.numCode+'" class="btnList" title="${text("编辑施工日志")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/constru/construTaskLog/disable?numCode='+row.numCode+'" class="btnList" title="${text("停用施工日志")}" data-confirm="${text("确认要停用该施工日志吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				} else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/constru/construTaskLog/enable?numCode='+row.numCode+'" class="btnList" title="${text("启用施工日志")}" data-confirm="${text("确认要启用该施工日志吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/constru/construTaskLog/delete?numCode='+row.numCode+'" class="btnList" title="${text("删除施工日志")}" data-confirm="${text("确认要删除该施工日志吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

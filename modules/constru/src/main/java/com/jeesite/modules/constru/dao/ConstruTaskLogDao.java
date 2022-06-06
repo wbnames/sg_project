@@ -1,18 +1,18 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.modules.design.dao;
+package com.jeesite.modules.constru.dao;
 
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
-import com.jeesite.modules.design.entity.DesignPaper;
+import com.jeesite.modules.constru.entity.ConstruTaskLog;
 
 /**
- * 设计图纸DAO接口
- * @author wang_bo
+ * 施工日志DAO接口
+ * @author lyu
  * @version 2022-06-06
  */
 @MyBatisDao
-public interface DesignPaperDao extends CrudDao<DesignPaper> {
+public interface ConstruTaskLogDao extends CrudDao<ConstruTaskLog> {
 	
 }

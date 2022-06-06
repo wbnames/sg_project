@@ -20,13 +20,13 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.design.entity.DesignPaper;
-import com.jeesite.modules.design.entity.DesignPP;
+import com.jeesite.modules.design.entity.DesignFFF;
 import com.jeesite.modules.design.service.DesignPaperService;
 
 /**
  * 设计图纸Controller
  * @author wang_bo
- * @version 2022-05-30
+ * @version 2022-06-06
  */
 @Controller
 @RequestMapping(value = "${adminPath}/design/designPaper")
@@ -69,11 +69,11 @@ public class DesignPaperController extends BaseController {
 	 * 查询子表数据
 	 */
 	@RequiresPermissions("design:designPaper:view")
-	@RequestMapping(value = "designPPListData")
+	@RequestMapping(value = "designFFFListData")
 	@ResponseBody
-	public Page<DesignPP> subListData(DesignPP designPP, HttpServletRequest request, HttpServletResponse response) {
-		designPP.setPage(new Page<>(request, response));
-		Page<DesignPP> page = designPaperService.findSubPage(designPP);
+	public Page<DesignFFF> subListData(DesignFFF designFFF, HttpServletRequest request, HttpServletResponse response) {
+		designFFF.setPage(new Page<>(request, response));
+		Page<DesignFFF> page = designPaperService.findSubPage(designFFF);
 		return page;
 	}
 

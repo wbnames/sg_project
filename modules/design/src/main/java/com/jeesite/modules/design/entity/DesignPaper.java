@@ -5,8 +5,10 @@ package com.jeesite.modules.design.entity;
 
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
-
 import java.util.Date;
+import com.jeesite.common.mybatis.annotation.JoinTable;
+import com.jeesite.common.mybatis.annotation.JoinTable.Type;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.List;
 import com.jeesite.common.collect.ListUtils;
 
@@ -18,7 +20,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 设计图纸Entity
  * @author wang_bo
- * @version 2022-05-30
+ * @version 2022-06-06
  */
 @Table(name="design_paper", alias="a", label="设计图纸信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),
@@ -29,7 +31,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="design_date", attrName="designDate", label="日期"),
 		@Column(name="sub_user", attrName="subUser", label="填报人"),
 		@Column(includeEntity=DataEntity.class),
-		@Column(name="constru_id", attrName="construId", label="constru_id"),
+		@Column(name="constru_id", attrName="construId", label="产品编号"),
 	}, orderBy="a.update_date DESC"
 )
 public class DesignPaper extends DataEntity<DesignPaper> {
@@ -42,8 +44,8 @@ public class DesignPaper extends DataEntity<DesignPaper> {
 	private String designContractl;		// 所属合同
 	private Date designDate;		// 日期
 	private String subUser;		// 填报人
-	private String construId;		// constru_id
-	private List<DesignPP> designPPList = ListUtils.newArrayList();		// 子表列表
+	private String construId;		// 产品编号
+	private List<DesignFFF> designFFFList = ListUtils.newArrayList();		// 子表列表
 	
 	public DesignPaper() {
 		this(null);
@@ -98,7 +100,7 @@ public class DesignPaper extends DataEntity<DesignPaper> {
 		this.designContractl = designContractl;
 	}
 	
-	@Length(min=0, max=200, message="日期长度不能超过 200 个字符")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getDesignDate() {
 		return designDate;
 	}
@@ -116,7 +118,7 @@ public class DesignPaper extends DataEntity<DesignPaper> {
 		this.subUser = subUser;
 	}
 	
-	@Length(min=0, max=255, message="constru_id长度不能超过 255 个字符")
+	@Length(min=0, max=255, message="产品编号长度不能超过 255 个字符")
 	public String getConstruId() {
 		return construId;
 	}
@@ -125,12 +127,12 @@ public class DesignPaper extends DataEntity<DesignPaper> {
 		this.construId = construId;
 	}
 	
-	public List<DesignPP> getDesignPPList() {
-		return designPPList;
+	public List<DesignFFF> getDesignFFFList() {
+		return designFFFList;
 	}
 
-	public void setDesignPPList(List<DesignPP> designPPList) {
-		this.designPPList = designPPList;
+	public void setDesignFFFList(List<DesignFFF> designFFFList) {
+		this.designFFFList = designFFFList;
 	}
 	
 }
