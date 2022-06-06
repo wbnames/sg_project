@@ -10,7 +10,7 @@ import com.jeesite.modules.cm.entity.PaymentPlan;
 /**
  * 收款计划DAO接口
  * @author wang_bo
- * @version 2022-05-30
+ * @version 2022-06-06
  */
 @MyBatisDao
 public interface PaymentPlanDao extends CrudDao<PaymentPlan> {

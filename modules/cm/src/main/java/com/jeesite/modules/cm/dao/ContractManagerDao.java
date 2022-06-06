@@ -10,7 +10,7 @@ import com.jeesite.modules.cm.entity.ContractManager;
 /**
  * 合同管理DAO接口
  * @author wang_bo
- * @version 2022-05-23
+ * @version 2022-06-06
  */
 @MyBatisDao
 public interface ContractManagerDao extends CrudDao<ContractManager> {

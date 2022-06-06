@@ -15,7 +15,7 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
 /**
  * 发货管理Service
  * @author wang_bo
- * @version 2022-05-24
+ * @version 2022-06-06
  */
 @Service
 @Transactional(readOnly=true)

@@ -10,7 +10,7 @@ import com.jeesite.modules.constru.entity.ProductClassifyCopy1;
 /**
  * 施工任务DAO接口
  * @author lyu
- * @version 2022-05-24
+ * @version 2022-06-06
  */
 @MyBatisDao
 public interface ProductClassifyCopy1Dao extends CrudDao<ProductClassifyCopy1> {

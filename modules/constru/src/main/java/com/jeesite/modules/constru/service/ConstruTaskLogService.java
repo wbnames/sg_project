@@ -15,7 +15,7 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
 /**
  * 施工日志Service
  * @author lyu
- * @version 2022-05-30
+ * @version 2022-06-06
  */
 @Service
 @Transactional(readOnly=true)

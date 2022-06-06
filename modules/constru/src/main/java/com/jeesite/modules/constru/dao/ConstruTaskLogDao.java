@@ -10,7 +10,7 @@ import com.jeesite.modules.constru.entity.ConstruTaskLog;
 /**
  * 施工日志DAO接口
  * @author lyu
- * @version 2022-05-30
+ * @version 2022-06-06
  */
 @MyBatisDao
 public interface ConstruTaskLogDao extends CrudDao<ConstruTaskLog> {

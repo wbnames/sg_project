@@ -13,7 +13,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 施工任务Entity
  * @author lyu
- * @version 2022-05-24
+ * @version 2022-06-06
  */
 @Table(name="product_classify_copy1", alias="a", label="施工任务信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),
@@ -22,7 +22,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="pm_conut", attrName="pmConut", label="产品数量"),
 		@Column(name="pm_size", attrName="pmSize", label="产品尺寸"),
 		@Column(includeEntity=DataEntity.class),
-		@Column(name="constru_id", attrName="construId.numCode", label="constru_id", isPK=true),
+		@Column(name="cntru_id", attrName="cntruId.numCode", label="施工任务", isInsert=false, isUpdate=false, isQuery=false),
 	}, orderBy="a.create_date ASC"
 )
 public class ProductClassifyCopy1 extends DataEntity<ProductClassifyCopy1> {
@@ -33,15 +33,15 @@ public class ProductClassifyCopy1 extends DataEntity<ProductClassifyCopy1> {
 	private String pmUnit;		// 产品单位
 	private Long pmConut;		// 产品数量
 	private String pmSize;		// 产品尺寸
-	private ConstruTask construId;		// constru_id 父类
+	private ConstruTask cntruId;		// 施工任务 父类
 	
 	public ProductClassifyCopy1() {
 		this(null);
 	}
 
 
-	public ProductClassifyCopy1(ConstruTask construId){
-		this.construId = construId;
+	public ProductClassifyCopy1(ConstruTask cntruId){
+		this.cntruId = cntruId;
 	}
 	
 	public String getNumCode() {
@@ -87,12 +87,13 @@ public class ProductClassifyCopy1 extends DataEntity<ProductClassifyCopy1> {
 		this.pmSize = pmSize;
 	}
 	
-	public ConstruTask getConstruId() {
-		return construId;
+	@Length(min=0, max=200, message="施工任务长度不能超过 200 个字符")
+	public ConstruTask getCntruId() {
+		return cntruId;
 	}
 
-	public void setConstruId(ConstruTask construId) {
-		this.construId = construId;
+	public void setCntruId(ConstruTask cntruId) {
+		this.cntruId = cntruId;
 	}
 	
 }

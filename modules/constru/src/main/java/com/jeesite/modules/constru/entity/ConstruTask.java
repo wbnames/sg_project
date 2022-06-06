@@ -19,7 +19,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 施工任务Entity
  * @author lyu
- * @version 2022-05-24
+ * @version 2022-06-06
  */
 @Table(name="constru_task", alias="a", label="施工任务信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),
@@ -30,9 +30,9 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="plan_accomplish_date", attrName="planAccomplishDate", label="计划完成日期"),
 		@Column(name="total_time", attrName="totalTime", label="总体用时"),
 		@Column(name="principal_id", attrName="principalId", label="负责人"),
-		@Column(name="design_paper", attrName="designPaper", label="设计图纸"),
-		@Column(name="product_record", attrName="productRecord", label="产品列表"),
-		@Column(name="constru_team", attrName="construTeam", label="施工班组"),
+		@Column(name="design_paper", attrName="designPaper", label="设计图纸", isInsert=false, isUpdate=false, isQuery=false),
+		@Column(name="product_record", attrName="productRecord", label="产品列表", isInsert=false, isUpdate=false, isQuery=false),
+		@Column(name="constru_team", attrName="construTeam", label="施工班组", isInsert=false, isUpdate=false, isQuery=false),
 		@Column(includeEntity=DataEntity.class),
 	}, orderBy="a.update_date DESC"
 )
@@ -50,9 +50,9 @@ public class ConstruTask extends DataEntity<ConstruTask> {
 	private String designPaper;		// 设计图纸
 	private String productRecord;		// 产品列表
 	private String construTeam;		// 施工班组
+	private List<DesignPaperCopy1> designPaperCopy1List = ListUtils.newArrayList();		// 子表列表
 	private List<ProductClassifyCopy1> productClassifyCopy1List = ListUtils.newArrayList();		// 子表列表
 	private List<ConstructionTeamCopy1> constructionTeamCopy1List = ListUtils.newArrayList();		// 子表列表
-	private List<DesignPaperCopy1> designPaperCopy1List = ListUtils.newArrayList();		// 子表列表
 	
 	public ConstruTask() {
 		this(null);
@@ -158,6 +158,14 @@ public class ConstruTask extends DataEntity<ConstruTask> {
 		this.construTeam = construTeam;
 	}
 	
+	public List<DesignPaperCopy1> getDesignPaperCopy1List() {
+		return designPaperCopy1List;
+	}
+
+	public void setDesignPaperCopy1List(List<DesignPaperCopy1> designPaperCopy1List) {
+		this.designPaperCopy1List = designPaperCopy1List;
+	}
+	
 	public List<ProductClassifyCopy1> getProductClassifyCopy1List() {
 		return productClassifyCopy1List;
 	}
@@ -172,14 +180,6 @@ public class ConstruTask extends DataEntity<ConstruTask> {
 
 	public void setConstructionTeamCopy1List(List<ConstructionTeamCopy1> constructionTeamCopy1List) {
 		this.constructionTeamCopy1List = constructionTeamCopy1List;
-	}
-	
-	public List<DesignPaperCopy1> getDesignPaperCopy1List() {
-		return designPaperCopy1List;
-	}
-
-	public void setDesignPaperCopy1List(List<DesignPaperCopy1> designPaperCopy1List) {
-		this.designPaperCopy1List = designPaperCopy1List;
 	}
 	
 }

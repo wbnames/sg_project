@@ -82,18 +82,18 @@
 						</div>
 					</div>
 				</div>
-				<h4 class="form-unit">${text('设计图纸')}</h4>
-				<div class="ml10 mr10 table-form">
-					<table id="designDDDDataGrid"></table>
-					<% if (hasPermi('production:productionManager:edit')){ %>
-						<a href="#" id="designDDDDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>
-					<% } %>
-				</div>
 				<h4 class="form-unit">${text('产品管理')}</h4>
 				<div class="ml10 mr10 table-form">
 					<table id="designPPPDataGrid"></table>
 					<% if (hasPermi('production:productionManager:edit')){ %>
 						<a href="#" id="designPPPDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>
+					<% } %>
+				</div>
+				<h4 class="form-unit">${text('设计图纸')}</h4>
+				<div class="ml10 mr10 table-form">
+					<table id="designDDDDataGrid"></table>
+					<% if (hasPermi('production:productionManager:edit')){ %>
+						<a href="#" id="designDDDDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>
 					<% } %>
 				</div>
 			</div>
@@ -112,6 +112,64 @@
 </div>
 <% } %>
 <script>
+//初始化产品管理DataGrid对象
+$("#designPPPDataGrid").dataGrid({
+
+	data: ${toJson(productionManager.designPPPList)},
+	datatype: "local", // 设置本地数据
+	autoGridHeight: function(){return 'auto'}, // 设置自动高度
+	
+	// 设置数据表格列
+	columnModel: [
+		{header:'状态', name:'status', editable:true, hidden:true},
+		{header:'主键', name:'numCode', editable:true, hidden:true},
+		{header:'${text("产品名称")}', name:'productName', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('product_name')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					js.select2(element).on("change",function(){$(this).resetValid()});
+				}
+			}
+		},
+		{header:'${text("产品位置")}', name:'productLocal', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'${text("产品编号")}', name:'productId.numCode', editable:true, hidden:true},
+		{header:'${text("产品颜色")}', name:'productColor', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'${text("产品厚度")}', name:'productUnit', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'${text("产品规格")}', name:'productType', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'${text("产品面积")}', name:'productArea', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'${text("产品数量")}', name:'productNum', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'${text("合计面积")}', name:'productSumArea', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'255', 'class':'form-control'}},
+		{header:'${text("备注一")}', name:'remarks1', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'255', 'class':'form-control'}},
+		{header:'${text("备注二")}', name:'remarks2', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'255', 'class':'form-control'}},
+		{header:'${text("备注三")}', name:'remarks3', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'255', 'class':'form-control'}},
+		{header:'${text("备注信息")}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
+		{header:'${text("操作")}', name:'actions', width:80, align:'center', formatter: function(val, obj, row, act){
+			var actions = [];
+			if (val == 'new'){
+				actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#designPPPDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}else{
+				actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#designPPPDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}
+			return actions.join('');
+		}, editoptions: {defaultValue: 'new'}}
+	],
+	
+	// 编辑表格参数
+	editGrid: true,				// 是否是编辑表格
+	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
+	editGridAddRowBtn: $('#designPPPDataGridAddRowBtn'),	// 子表增行按钮
+	editGridAddRowBtnToHeader: true,	// 子表增行按钮是否显示到表头上
+	editGridAddRowInitData: {numCode: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+	
+	// 编辑表格的提交数据参数
+	editGridInputFormListName: 'designPPPList', // 提交的数据列表名
+	editGridInputFormListAttrs: 'status,numCode,contractlCode,productionCode,productName,productLocal,productId.numCode,productColor,productUnit,productType,productArea,productNum,productSumArea,remarks1,remarks2,remarks3,createBy,createDate,updateBy,updateDate,remarks,', // 提交数据列表的属性字段
+	
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
 //初始化设计图纸DataGrid对象
 $("#designDDDDataGrid").dataGrid({
 
@@ -180,64 +238,6 @@ $("#designDDDDataGrid").dataGrid({
 	// 编辑表格的提交数据参数
 	editGridInputFormListName: 'designDDDList', // 提交的数据列表名
 	editGridInputFormListAttrs: 'status,numCode,productionCode.numCode,designPaperName,designProject,designContractl,designDate,subUser,createBy,createDate,updateBy,updateDate,remarks,construId,', // 提交数据列表的属性字段
-	
-	// 加载成功后执行事件
-	ajaxSuccess: function(data){
-		
-	}
-});
-//初始化产品管理DataGrid对象
-$("#designPPPDataGrid").dataGrid({
-
-	data: ${toJson(productionManager.designPPPList)},
-	datatype: "local", // 设置本地数据
-	autoGridHeight: function(){return 'auto'}, // 设置自动高度
-	
-	// 设置数据表格列
-	columnModel: [
-		{header:'状态', name:'status', editable:true, hidden:true},
-		{header:'主键', name:'numCode', editable:true, hidden:true},
-		{header:'${text("产品名称")}', name:'productName', width:100, 
-			editable:true, edittype:'select', editoptions:{'class':'form-control',
-				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('product_name')}),
-				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					js.select2(element).on("change",function(){$(this).resetValid()});
-				}
-			}
-		},
-		{header:'${text("产品位置")}', name:'productLocal', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'${text("产品编号")}', name:'productId.numCode', editable:true, hidden:true},
-		{header:'${text("产品颜色")}', name:'productColor', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'${text("产品厚度")}', name:'productUnit', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'${text("产品规格")}', name:'productType', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'${text("产品面积")}', name:'productArea', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'${text("产品数量")}', name:'productNum', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'${text("合计面积")}', name:'productSumArea', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'255', 'class':'form-control'}},
-		{header:'${text("备注一")}', name:'remarks1', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'255', 'class':'form-control'}},
-		{header:'${text("备注二")}', name:'remarks2', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'255', 'class':'form-control'}},
-		{header:'${text("备注三")}', name:'remarks3', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'255', 'class':'form-control'}},
-		{header:'${text("备注信息")}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
-		{header:'${text("操作")}', name:'actions', width:80, align:'center', formatter: function(val, obj, row, act){
-			var actions = [];
-			if (val == 'new'){
-				actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#designPPPDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
-			}else{
-				actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#designPPPDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
-			}
-			return actions.join('');
-		}, editoptions: {defaultValue: 'new'}}
-	],
-	
-	// 编辑表格参数
-	editGrid: true,				// 是否是编辑表格
-	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
-	editGridAddRowBtn: $('#designPPPDataGridAddRowBtn'),	// 子表增行按钮
-	editGridAddRowBtnToHeader: true,	// 子表增行按钮是否显示到表头上
-	editGridAddRowInitData: {numCode: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
-	
-	// 编辑表格的提交数据参数
-	editGridInputFormListName: 'designPPPList', // 提交的数据列表名
-	editGridInputFormListAttrs: 'status,numCode,contractlCode,productionCode,productName,productLocal,productId.numCode,productColor,productUnit,productType,productArea,productNum,productSumArea,remarks1,remarks2,remarks3,createBy,createDate,updateBy,updateDate,remarks,', // 提交数据列表的属性字段
 	
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
