@@ -5,7 +5,7 @@ package com.jeesite.modules.design.dao;
 
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
-import com.jeesite.modules.design.entity.DesignPaper;
+import com.jeesite.modules.design.entity.DesignFFF;
 
 /**
  * 设计图纸DAO接口
@@ -13,6 +13,6 @@ import com.jeesite.modules.design.entity.DesignPaper;
  * @version 2022-06-06
  */
 @MyBatisDao
-public interface DesignPaperDao extends CrudDao<DesignPaper> {
+public interface DesignFFFDao extends CrudDao<DesignFFF> {
 	
 }
