@@ -365,7 +365,12 @@
                                             ],
                                             yAxis : [
                                                 {
-                                                    type : 'value'
+                                                    type : 'value',
+                                                    axisLabel: {
+                                                        formatter: function (value) {
+                                                            return value;
+                                                        }
+                                                    }
                                                 }
                                             ],
                                             color: ['#EE6666','#91CC75'],
