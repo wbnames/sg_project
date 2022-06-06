@@ -10,7 +10,7 @@ import com.jeesite.modules.design.entity.DesignPaper;
 /**
  * 设计图纸DAO接口
  * @author wang_bo
- * @version 2022-06-06
+ * @version 2022-05-30
  */
 @MyBatisDao
 public interface DesignPaperDao extends CrudDao<DesignPaper> {
