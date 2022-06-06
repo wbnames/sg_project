@@ -4,10 +4,6 @@
 package com.jeesite.modules.logistics.entity;
 
 import org.hibernate.validator.constraints.Length;
-import java.util.Date;
-import com.jeesite.common.mybatis.annotation.JoinTable;
-import com.jeesite.common.mybatis.annotation.JoinTable.Type;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -17,7 +13,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 发货管理Entity
  * @author wang_bo
- * @version 2022-06-06
+ * @version 2022-05-24
  */
 @Table(name="shipments_logistics", alias="a", label="发货管理信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编码", isPK=true),
@@ -47,7 +43,7 @@ public class ShipmentsLogistics extends DataEntity<ShipmentsLogistics> {
 	private String shipmentsManufacturer;		// 发货厂商
 	private String shipmentsUser;		// 发货人
 	private String shipmentsUserPhone;		// 发货人电话
-	private Date shipmentsDate;		// 发货日期
+	private String shipmentsDate;		// 发货日期
 	private String shipmentsAddress;		// 发货地址
 	private String shipmentsOdd;		// 发货单号
 	private String shipmentsCost;		// 快递费用
@@ -118,12 +114,12 @@ public class ShipmentsLogistics extends DataEntity<ShipmentsLogistics> {
 		this.shipmentsUserPhone = shipmentsUserPhone;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	public Date getShipmentsDate() {
+	@Length(min=0, max=200, message="发货日期长度不能超过 200 个字符")
+	public String getShipmentsDate() {
 		return shipmentsDate;
 	}
 
-	public void setShipmentsDate(Date shipmentsDate) {
+	public void setShipmentsDate(String shipmentsDate) {
 		this.shipmentsDate = shipmentsDate;
 	}
 	

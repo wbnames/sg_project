@@ -10,7 +10,7 @@ import com.jeesite.modules.constru.entity.ConstruTask;
 /**
  * 施工任务DAO接口
  * @author lyu
- * @version 2022-06-06
+ * @version 2022-05-24
  */
 @MyBatisDao
 public interface ConstruTaskDao extends CrudDao<ConstruTask> {

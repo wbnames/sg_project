@@ -90,8 +90,8 @@ $('#dataGrid').dataGrid({
 		{header:'${text("任务状态")}', name:'productionStatus', index:'a.production_status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text("计划开始日期")}', name:'planStartDate', index:'a.plan_start_date', width:150, align:"center"},
-		{header:'${text("计划完成日期")}', name:'planEndDate', index:'a.plan_end_date', width:150, align:"center"},
+		{header:'${text("计划开始日期")}', name:'planStartDate', index:'a.plan_start_date', width:150, align:"left"},
+		{header:'${text("计划完成日期")}', name:'planEndDate', index:'a.plan_end_date', width:150, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
 		}},

@@ -5,8 +5,6 @@ package com.jeesite.modules.design.entity;
 
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
-
-import java.util.Date;
 import java.util.List;
 import com.jeesite.common.collect.ListUtils;
 
@@ -40,7 +38,7 @@ public class DesignPaper extends DataEntity<DesignPaper> {
 	private String designPaperName;		// 设计图纸名称
 	private String designProject;		// 所属项目
 	private String designContractl;		// 所属合同
-	private Date designDate;		// 日期
+	private String designDate;		// 日期
 	private String subUser;		// 填报人
 	private String construId;		// constru_id
 	private List<DesignPP> designPPList = ListUtils.newArrayList();		// 子表列表
@@ -99,11 +97,11 @@ public class DesignPaper extends DataEntity<DesignPaper> {
 	}
 	
 	@Length(min=0, max=200, message="日期长度不能超过 200 个字符")
-	public Date getDesignDate() {
+	public String getDesignDate() {
 		return designDate;
 	}
 
-	public void setDesignDate(Date designDate) {
+	public void setDesignDate(String designDate) {
 		this.designDate = designDate;
 	}
 	

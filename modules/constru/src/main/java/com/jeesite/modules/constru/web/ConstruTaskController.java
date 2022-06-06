@@ -20,15 +20,15 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.constru.entity.ConstruTask;
-import com.jeesite.modules.constru.entity.DesignPaperCopy1;
 import com.jeesite.modules.constru.entity.ProductClassifyCopy1;
 import com.jeesite.modules.constru.entity.ConstructionTeamCopy1;
+import com.jeesite.modules.constru.entity.DesignPaperCopy1;
 import com.jeesite.modules.constru.service.ConstruTaskService;
 
 /**
  * 施工任务Controller
  * @author lyu
- * @version 2022-06-06
+ * @version 2022-05-24
  */
 @Controller
 @RequestMapping(value = "${adminPath}/constru/construTask")
@@ -71,18 +71,6 @@ public class ConstruTaskController extends BaseController {
 	 * 查询子表数据
 	 */
 	@RequiresPermissions("constru:construTask:view")
-	@RequestMapping(value = "designPaperCopy1ListData")
-	@ResponseBody
-	public Page<DesignPaperCopy1> subListData(DesignPaperCopy1 designPaperCopy1, HttpServletRequest request, HttpServletResponse response) {
-		designPaperCopy1.setPage(new Page<>(request, response));
-		Page<DesignPaperCopy1> page = construTaskService.findSubPage(designPaperCopy1);
-		return page;
-	}
-	
-	/**
-	 * 查询子表数据
-	 */
-	@RequiresPermissions("constru:construTask:view")
 	@RequestMapping(value = "productClassifyCopy1ListData")
 	@ResponseBody
 	public Page<ProductClassifyCopy1> subListData(ProductClassifyCopy1 productClassifyCopy1, HttpServletRequest request, HttpServletResponse response) {
@@ -100,6 +88,18 @@ public class ConstruTaskController extends BaseController {
 	public Page<ConstructionTeamCopy1> subListData(ConstructionTeamCopy1 constructionTeamCopy1, HttpServletRequest request, HttpServletResponse response) {
 		constructionTeamCopy1.setPage(new Page<>(request, response));
 		Page<ConstructionTeamCopy1> page = construTaskService.findSubPage(constructionTeamCopy1);
+		return page;
+	}
+	
+	/**
+	 * 查询子表数据
+	 */
+	@RequiresPermissions("constru:construTask:view")
+	@RequestMapping(value = "designPaperCopy1ListData")
+	@ResponseBody
+	public Page<DesignPaperCopy1> subListData(DesignPaperCopy1 designPaperCopy1, HttpServletRequest request, HttpServletResponse response) {
+		designPaperCopy1.setPage(new Page<>(request, response));
+		Page<DesignPaperCopy1> page = construTaskService.findSubPage(designPaperCopy1);
 		return page;
 	}
 

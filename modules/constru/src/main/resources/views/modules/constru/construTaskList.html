@@ -61,6 +61,24 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="control-label">${text('设计图纸')}：</label>
+					<div class="control-inline">
+						<#form:input path="designPaper" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('产品列表')}：</label>
+					<div class="control-inline">
+						<#form:input path="productRecord" maxlength="128" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('施工班组')}：</label>
+					<div class="control-inline">
+						<#form:input path="construTeam" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-120">
 						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
@@ -122,6 +140,9 @@ $('#dataGrid').dataGrid({
 			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
 		}},
 		{header:'${text("负责人")}', name:'principalId', index:'a.principal_id', width:150, align:"left"},
+		{header:'${text("设计图纸")}', name:'designPaper', index:'a.design_paper', width:150, align:"left"},
+		{header:'${text("产品列表")}', name:'productRecord', index:'a.product_record', width:150, align:"left"},
+		{header:'${text("施工班组")}', name:'construTeam', index:'a.constru_team', width:150, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
 		}},

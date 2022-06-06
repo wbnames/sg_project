@@ -4,10 +4,6 @@
 package com.jeesite.modules.cm.entity;
 
 import org.hibernate.validator.constraints.Length;
-import java.util.Date;
-import com.jeesite.common.mybatis.annotation.JoinTable;
-import com.jeesite.common.mybatis.annotation.JoinTable.Type;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -17,7 +13,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 合同管理Entity
  * @author wang_bo
- * @version 2022-06-06
+ * @version 2022-05-23
  */
 @Table(name="contract_manager", alias="a", label="合同管理信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),
@@ -45,7 +41,7 @@ public class ContractManager extends DataEntity<ContractManager> {
 	private String contractName;		// 合同名称
 	private String contractCode;		// 合同编号
 	private String contractProject;		// 所属项目
-	private Date dateSigning;		// 签订日期
+	private String dateSigning;		// 签订日期
 	private String contractType;		// 合同类型
 	private String contractSum;		// 合同金额
 	private String firstUnit;		// 甲方单位
@@ -100,12 +96,12 @@ public class ContractManager extends DataEntity<ContractManager> {
 		this.contractProject = contractProject;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	public Date getDateSigning() {
+	@Length(min=0, max=200, message="签订日期长度不能超过 200 个字符")
+	public String getDateSigning() {
 		return dateSigning;
 	}
 
-	public void setDateSigning(Date dateSigning) {
+	public void setDateSigning(String dateSigning) {
 		this.dateSigning = dateSigning;
 	}
 	

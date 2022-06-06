@@ -4,10 +4,6 @@
 package com.jeesite.modules.cm.entity;
 
 import org.hibernate.validator.constraints.Length;
-import java.util.Date;
-import com.jeesite.common.mybatis.annotation.JoinTable;
-import com.jeesite.common.mybatis.annotation.JoinTable.Type;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -17,7 +13,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 收款计划Entity
  * @author wang_bo
- * @version 2022-06-06
+ * @version 2022-05-30
  */
 @Table(name="payment_plan", alias="a", label="收款计划信息", columns={
 		@Column(name="num_code", attrName="numCode", label="编号", isPK=true),
@@ -46,7 +42,7 @@ public class PaymentPlan extends DataEntity<PaymentPlan> {
 	private String paymentContract;		// 所属合同
 	private String firstUnit;		// 甲方单位
 	private String bankAcc;		// 银行账户
-	private Date signDate;		// 签订日期
+	private String signDate;		// 签订日期
 	private String informantUser;		// 填报人
 	
 	public PaymentPlan() {
@@ -137,12 +133,12 @@ public class PaymentPlan extends DataEntity<PaymentPlan> {
 		this.bankAcc = bankAcc;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	public Date getSignDate() {
+	@Length(min=0, max=50, message="签订日期长度不能超过 50 个字符")
+	public String getSignDate() {
 		return signDate;
 	}
 
-	public void setSignDate(Date signDate) {
+	public void setSignDate(String signDate) {
 		this.signDate = signDate;
 	}
 	

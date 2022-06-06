@@ -25,7 +25,7 @@ import com.jeesite.modules.logistics.service.ShipmentsLogisticsService;
 /**
  * 发货管理Controller
  * @author wang_bo
- * @version 2022-06-06
+ * @version 2022-05-24
  */
 @Controller
 @RequestMapping(value = "${adminPath}/logistics/shipmentsLogistics")

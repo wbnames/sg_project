@@ -10,7 +10,7 @@ import com.jeesite.modules.logistics.entity.ShipmentsLogistics;
 /**
  * 发货管理DAO接口
  * @author wang_bo
- * @version 2022-06-06
+ * @version 2022-05-24
  */
 @MyBatisDao
 public interface ShipmentsLogisticsDao extends CrudDao<ShipmentsLogistics> {

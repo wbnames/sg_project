@@ -8,12 +8,12 @@
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3>1个</h3>
-                        <p>待办生产任务</p>
+                        <p>待办任务</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <a href="${ctx}/production/productionManager/list" class="small-box-footer">点击处理<i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">点击处理<i class="fa fa-arrow-circle-right"></i></a>
                 </div>
 			</div>
 		</div>
@@ -27,7 +27,7 @@
                     <div class="icon">
                         <i class="fa fa-cny"></i>
                     </div>
-                    <a href="${ctx}/cm/paymentPlan/list" class="small-box-footer">点击处理<i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">点击处理<i class="fa fa-arrow-circle-right"></i></a>
                 </div>
 			</div>
 		</div>
@@ -42,7 +42,7 @@
                     <div class="icon">
                         <i class="fa fa-bookmark"></i>
                     </div>
-                    <a href="${ctx}/pm/projectManager/list" class="small-box-footer">点击处理<i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">点击处理<i class="fa fa-arrow-circle-right"></i></a>
                 </div>
 			</div>
 		</div>
@@ -51,12 +51,12 @@
                 <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3>1个</h3>
-                        <p>延期施工任务</p>
+                        <p>延期任务</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-calendar-times-o"></i>
                     </div>
-                    <a href="${ctx}/constru/construTask/list" class="small-box-footer">点击处理<i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">点击处理<i class="fa fa-arrow-circle-right"></i></a>
                 </div>
 			</div>
 		</div>
@@ -197,7 +197,6 @@
                                         }
                                     };
                                     option = {
-                                        color: ['#91CC75','#FAC858', '#EE6666'],
                                         tooltip: {
                                             trigger: 'axis',
                                             axisPointer: {
@@ -205,7 +204,7 @@
                                             }
                                         },
                                         legend: {
-                                            data: ['项目进度', '施工进度', '生产进度']
+                                            data: ['项目进度', '施工进度', '生产进度', '物流进度']
                                         },
                                         toolbox: {
                                             show: true,
@@ -242,7 +241,6 @@
                                                 name: '项目进度',
                                                 type: 'bar',
                                                 barGap: 0,
-                                                barWidth: 17,
                                                 emphasis: {
                                                     focus: 'series'
                                                 },
@@ -251,7 +249,6 @@
                                             {
                                                 name: '施工进度',
                                                 type: 'bar',
-                                                barWidth: 17,
                                                 emphasis: {
                                                     focus: 'series'
                                                 },
@@ -260,11 +257,18 @@
                                             {
                                                 name: '生产进度',
                                                 type: 'bar',
-                                                barWidth: 17,
                                                 emphasis: {
                                                     focus: 'series'
                                                 },
                                                 data: [60, 40, 50]
+                                            },
+                                            {
+                                                name: '物流进度',
+                                                type: 'bar',
+                                                emphasis: {
+                                                    focus: 'series'
+                                                },
+                                                data: [50, 40, 60]
                                             }
                                         ]
                                     };
@@ -299,6 +303,7 @@
                         </div>
                     </div>
 
+                    <div class="col-sm-7"><h3 class="box-title">建材使用情况</h3></div>
 
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -325,180 +330,107 @@
 							<div class="chart">
 								<div id="myChart" style="height:230px;width:100%"></div><script>
 									$(function(){
-                                        chart_three();
+										myChart1 = echarts.init(document.getElementById('myChart'), 'default');
+										myChart1.setOption({
+										    title : {
+										        text: js.formatDate(new Date(), 'yyyy-MM')
+										    },
+										    tooltip : {
+										        trigger: 'axis'
+										    },
+										    legend: {
+										        data:['未使用量','已使用量']
+										    },
+										    toolbox: {
+										        show : true,
+										        feature : {
+										            mark : {show: true},
+										            dataView : {show: true, readOnly: false},
+										            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+										            restore : {show: true},
+										            saveAsImage : {show: true}
+										        }
+										    },
+										    calculable : true,
+										    grid : {
+										    	top: '49',
+										    	right: '20',
+										    	bottom: '30'
+										    },
+										    xAxis : [
+										        {
+										            type : 'category',
+										            boundaryGap : false,
+										            data : ['铝板A','铝板B','木材A','工程塑料A','石材A','金属A']
+										        }
+										    ],
+										    yAxis : [
+										        {
+										            type : 'value'
+										        }
+										    ],
+										    //color: ['#FAD860','#F3A43B','#60C0DD','#C6E579'],
+										    series : [
+										        {
+										            name:'未使用量',
+										            type:'bar',
+										            smooth:true,
+										            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+										            data:[10, 12, 21, 54, 260, 830, 710]
+										        },
+										        {
+										            name:'已使用量',
+										            type:'bar',
+										            smooth:true,
+										            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+										            data:[30, 182, 434, 791, 390, 30, 10]
+										        }
+										     ]
+										});
 									});
-
-                                    function chart_two(){
-                                        myChart1 = echarts.init(document.getElementById('myChart'), 'default');
-                                        myChart1.setOption({
-                                            title : {
-                                                text: '建材使用总消耗占比'
-                                            },
-                                            tooltip : {
-                                                trigger: 'axis'
-                                            },
-                                            legend: {
-                                                data:['未使用量','已使用量']
-                                            },
-                                            toolbox: {
-                                                show : true,
-                                                feature : {
-                                                    mark : {show: true},
-                                                    dataView : {show: true, readOnly: false},
-                                                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-                                                    restore : {show: true},
-                                                    saveAsImage : {show: true}
-                                                }
-                                            },
-                                            calculable : true,
-                                            grid : {
-                                                top: '49',
-                                                right: '20',
-                                                bottom: '30'
-                                            },
-                                            xAxis : [
-                                                {
-                                                    type : 'category',
-                                                    boundaryGap : false,
-                                                    data : ['铝板A','铝板B','木材A','工程塑料A','石材A','金属A']
-                                                }
-                                            ],
-                                            yAxis : [
-                                                {
-                                                    type : 'value'
-                                                }
-                                            ],
-                                            color: ['#EE6666','#91CC75'],
-                                            series : [
-                                                {
-                                                    name:'未使用量',
-                                                    type:'bar',
-                                                    smooth:true,
-                                                    barWidth: 27,
-                                                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                                                    data:[30, 40, 45, 54, 260, 830]
-                                                },
-                                                {
-                                                    name:'已使用量',
-                                                    type:'bar',
-                                                    smooth:true,
-                                                    barWidth: 27,
-                                                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                                                    data:[90, 182, 434, 791, 390, 600]
-                                                }
-                                            ]
-                                        });
-                                    }
-
-                                    function chart_three(){
-
-
-                                        myChart1 = echarts.init(document.getElementById('myChart'), 'default');
-                                        myChart1.setOption({
-                                            title : {
-                                                text: '项目进度'
-                                            },
-                                            tooltip : {
-                                                trigger: 'axis'
-                                            },
-                                            legend: {
-                                                data:['施工进度','生产进度']
-                                            },
-                                            toolbox: {
-                                                show : true,
-                                                feature : {
-                                                    mark : {show: true},
-                                                    dataView : {show: true, readOnly: false},
-                                                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-                                                    restore : {show: true},
-                                                    saveAsImage : {show: true}
-                                                }
-                                            },
-                                            calculable : true,
-                                            grid : {
-                                                top: '49',
-                                                right: '20',
-                                                bottom: '30'
-                                            },
-                                            xAxis : [
-                                                {
-                                                    type : 'category',
-                                                    boundaryGap : false,
-                                                    data : ['2022年6月6日','2022年6月7日','2022年6月8日','2022年6月9日','2022年6月10日']
-                                                }
-                                            ],
-                                            yAxis : [
-                                                {
-                                                    type : 'value',
-                                                    axisLabel: {
-                                                        formatter: function (value) {
-                                                            return value + '%';
-                                                        }
-                                                    }
-                                                }
-                                            ],
-                                            color: ['#EE6666','#91CC75'],
-                                            series : [
-                                                {
-                                                    name:'施工进度',
-                                                    type:'bar',
-                                                    smooth:true,
-                                                    barWidth: 27,
-                                                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                                                    data:[10, 20, 30, 40, 50, 60, 70]
-                                                },
-                                                {
-                                                    name:'生产进度',
-                                                    type:'bar',
-                                                    smooth:true,
-                                                    barWidth: 27,
-                                                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                                                    data:[20, 30, 40, 50, 60, 70, 80]
-                                                }
-                                            ]
-                                        });
-                                    }
-
 								</script>
-
-
-
 							</div>
 						</div>
-
-
-
-
 						<div class="col-md-4">
 							<p class="text-center">
-								<strong>XX二期工程A地块</strong>
+								<strong>项目进度</strong>
 							</p>
 							<div class="progress-group">
-                                <span class="progress-text"><a href="#" onclick="project_rate()">项目进度</a></span>
+								<span class="progress-text">当前项目进度</span>
 								<span class="progress-number">80%</span>
 								<div class="progress sm">
 									<div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
 								</div>
 							</div>
 
+							<div class="progress-group">
+								<span class="progress-text">当前施工进度</span>
+								<span class="progress-number">40%</span>
+								<div class="progress sm">
+									<div class="progress-bar progress-bar-warning" style="width: 40%"></div>
+								</div>
+							</div>
                             <div class="progress-group">
-                                <span class="progress-text"><a href="#" onclick="expend_rate()">建材使用总消耗占比</a></span>
+                                <span class="progress-text">当前生产进度</span>
+                                <span class="progress-number">50%</span>
+                                <div class="progress sm">
+                                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <span class="progress-text">当前物流进度</span>
+                                <span class="progress-number">60%</span>
+                                <div class="progress sm">
+                                    <div class="progress-bar progress-bar-warning" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                <span class="progress-text">当前建材使用总消耗占比</span>
                                 <span class="progress-number">70%</span>
                                 <div class="progress sm">
                                     <div class="progress-bar progress-bar-red" style="width: 70%"></div>
                                 </div>
                             </div>
-
-                            <script>
-                                function project_rate(){
-                                    chart_three();
-                                }
-                                function expend_rate(){
-                                    chart_two();
-                                }
-                            </script>
-
-
 							<!--<div class="progress-group">
 								<span class="progress-text">查询访问量</span>
 								<span class="progress-number"><b>250</b>/500</span>
@@ -512,115 +444,7 @@
 
 
 
-                <script>
 
-
-
-
-                    //任务状态
-                    $(function(){
-                        $.post("${ctx}/constru/construTask/listData",function(data){
-                            var html="";
-                            $.each(data.list,function(i,item){
-                                if("1"==item.taskStatus){
-                                    item.taskStatus="未开始"
-                                }else if("2"==item.taskStatus){
-                                    item.taskStatus="施工中"
-                                }else if("3"==item.taskStatus) {
-                                    item.taskStatus = "暂停"
-                                }
-                                item.designPaper="1526466442910605312"
-                                item.productRecord="1526466442910605312"
-                                item.construTeam="A组"
-                                item.projectId="二期工程A地块"
-                                    html+="<tr>"
-                                        +"<td title="+item.numCode+">"+item.numCode+"</td>"
-                                        +"<td title="+item.taskName+">"+item.taskName+"</td>"
-                                        +"<td title="+item.projectId+">"+item.projectId+"</td>"
-                                        +"<td title="+item.taskStatus+">"+item.taskStatus+"</td>"
-                                        +"<td title="+item.startDate+">"+item.startDate+"</td>"
-                                        +"<td title="+item.planAccomplishDate+">"+item.planAccomplishDate+"</td>"
-                                        +"<td title="+item.principalId+">"+item.principalId+"</td>"
-                                        +"<td title="+item.designPaper+">"+item.designPaper+"</td>"
-                                        +"<td title="+item.productRecord+">"+item.productRecord+"</td>"
-                                        +"<td title="+item.construTeam+">"+item.construTeam+"</td>"
-                                        +"<td title="+item.status+">"+item.status+"</td>"
-                                "</tr>";
-
-
-                            });
-                            html+="</table>";
-                            $("#pro_2").append(html);
-                        })
-                    })
-
-                    //项目状态
-                    $(function(){
-                        $.post("${ctx}/pm/projectManager/listData",function(data){
-                            var html="";
-                            $.each(data.list,function(i,item){
-                                if("1"==item.projectStatus){
-                                    item.projectStatus="未开始"
-                                }else if("2"==item.projectStatus){
-                                    item.projectStatus="施工中"
-                                }else if("3"==item.projectStatus){
-                                    item.projectStatus="暂停"
-                                }
-                                html+="<tr>"
-                                    +"<td title="+item.serialNumber+">"+item.serialNumber+"</td>"
-                                    +"<td title="+item.name+">"+item.name+"</td>"
-                                    +"<td title="+item.area+">"+item.area+"</td>"
-                                    +"<td title="+item.regulators+">"+item.regulators+"</td>"
-                                    +"<td title="+item.projectStatus+">"+item.projectStatus+"</td>"
-                                    +"<td title="+item.constructionUnit+">"+item.constructionUnit+"</td>"
-                                    +"<td title="+item.mainContractor+">"+item.mainContractor+"</td>"
-                                    +"<td title="+item.status+">"+item.status+"</td>"
-                                "</tr>";
-
-
-                            });
-                            html+="</table>";
-                            $("#pro_1").append(html);
-                        })
-                    })
-
-                    //物流状态
-                    $(function(){
-                        $.post("${ctx}/logistics/shipmentsLogistics/listData",function(data){
-                            var html="";
-                            $.each(data.list,function(i,item){
-                                if("1"==item.shipmentsStatus){
-                                    item.shipmentsStatus="未发货"
-                                }else if("2"==item.shipmentsStatus){
-                                    item.shipmentsStatus="运输中"
-                                }else if("3"==item.shipmentsStatus) {
-                                    item.shipmentsStatus = "已送达"
-                                }
-                                item.shipmentsProject="星空建筑A大厦"
-                                html+="<tr>"
-                                    +"<td title="+item.shipmentsName+">"+item.shipmentsName+"</td>"
-                                    +"<td title="+item.shipmentsProject+">"+item.shipmentsProject+"</td>"
-                                    +"<td title="+item.shipmentsManufacturer+">"+item.shipmentsManufacturer+"</td>"
-                                    +"<td title="+item.shipmentsUser+">"+item.shipmentsUser+"</td>"
-                                    +"<td title="+item.shipmentsOdd+">"+item.shipmentsOdd+"</td>"
-                                    +"<td title="+item.shipmentsCost+">"+item.shipmentsCost+"</td>"
-                                    +"<td title="+item.shipmentsCom+">"+item.shipmentsCom+"</td>"
-                                    +"<td title="+item.shipmentsStatus+">"+item.shipmentsStatus+"</td>"
-                                    +"<td title="+item.consignee+">"+item.consignee+"</td>"
-                                    +"<td title="+item.consigneePhone+">"+item.consigneePhone+"</td>"
-                                    +"<td title="+item.consigneeAddress+">"+item.consigneeAddress+"</td>"
-                                    +"<td title="+item.status+">"+item.status+"</td>"
-                                "</tr>";
-
-
-                            });
-                            html+="</table>";
-                            $("#pro_3").append(html);
-                        })
-                    })
-
-
-                </script>
 
 				<div class="box-footer">
                     <div class="row">
@@ -664,7 +488,46 @@
                                                         <th>状态</th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody id="pro_2">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>1526466442809942016</td>
+                                                        <td>关闭水闸</td>
+                                                        <td>二期工程A地块</td>
+                                                        <td>未开始</td>
+                                                        <td>2022年5月29日</td>
+                                                        <td>2022年5月30日</td>
+                                                        <td>张三</td>
+                                                        <td>1526466442910605312</td>
+                                                        <td>1526466443351007232</td>
+                                                        <td>A班组</td>
+                                                        <td>正常</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1526466442809942016</td>
+                                                        <td>处理废料</td>
+                                                        <td>二期工程B地块</td>
+                                                        <td>进行中</td>
+                                                        <td>2022年5月29日</td>
+                                                        <td>2022年5月30日</td>
+                                                        <td>李四</td>
+                                                        <td>1526466442910605312</td>
+                                                        <td>1526466443351007232</td>
+                                                        <td>B班组</td>
+                                                        <td>正常</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1526466442809942016</td>
+                                                        <td>安全巡查</td>
+                                                        <td>二期工程C地块</td>
+                                                        <td>暂停</td>
+                                                        <td>2022年5月29日</td>
+                                                        <td>2022年5月30日</td>
+                                                        <td>王五</td>
+                                                        <td>1526466442910605312</td>
+                                                        <td>1526466443351007232</td>
+                                                        <td>C班组</td>
+                                                        <td>正常</td>
+                                                    </tr>
                                                 </table>
                                             </div>
 
@@ -901,7 +764,37 @@
                                                         <th>状态</th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody id="pro_1">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>1526466442809942016</td>
+                                                        <td>AA项目A大厦</td>
+                                                        <td>北京市</td>
+                                                        <td>A监管单位</td>
+                                                        <td>未开始</td>
+                                                        <td>A建设单位</td>
+                                                        <td>A总建单位</td>
+                                                        <td>正常</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1526445463809942016</td>
+                                                        <td>BB项目B大厦</td>
+                                                        <td>北京市</td>
+                                                        <td>B监管单位</td>
+                                                        <td>进行中</td>
+                                                        <td>B建设单位</td>
+                                                        <td>B总建单位</td>
+                                                        <td>正常</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1526432342809942016</td>
+                                                        <td>CC项目C大厦</td>
+                                                        <td>北京市</td>
+                                                        <td>C监管单位</td>
+                                                        <td>暂停</td>
+                                                        <td>C建设单位</td>
+                                                        <td>C总建单位</td>
+                                                        <td>正常</td>
+                                                    </tr>
                                                 </table>
                                             </div>
 
@@ -1129,7 +1022,49 @@
                                                         <th>状态</th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody id="pro_3">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>螺丝三箱</td>
+                                                        <td>A项目</td>
+                                                        <td>A厂商</td>
+                                                        <td>张三</td>
+                                                        <td>A332452</td>
+                                                        <td>200</td>
+                                                        <td>A公司</td>
+                                                        <td>未发货</td>
+                                                        <td>李四</td>
+                                                        <td>17611225588</td>
+                                                        <td>上海市南京路108号</td>
+                                                        <td>正常</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>螺母三箱</td>
+                                                        <td>B项目</td>
+                                                        <td>B厂商</td>
+                                                        <td>王五</td>
+                                                        <td>B332452</td>
+                                                        <td>200</td>
+                                                        <td>B公司</td>
+                                                        <td>运输中</td>
+                                                        <td>李六</td>
+                                                        <td>17611245588</td>
+                                                        <td>上海市南京路108号</td>
+                                                        <td>正常</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>铝板三箱</td>
+                                                        <td>C项目</td>
+                                                        <td>C厂商</td>
+                                                        <td>张七</td>
+                                                        <td>C332452</td>
+                                                        <td>200</td>
+                                                        <td>C公司</td>
+                                                        <td>已送到</td>
+                                                        <td>李八</td>
+                                                        <td>17611224488</td>
+                                                        <td>上海市南京路108号</td>
+                                                        <td>正常</td>
+                                                    </tr>
                                                 </table>
                                             </div>
 
@@ -1322,18 +1257,12 @@
                         </div>
                     </div>
                 </div>
-
-
 			</div>
 
 
 		</section>
     </div>
 </div>
-
-
-
-
 <footer class="main-footer m0">
 	<div class="pull-right hidden-xs">当前版本： ${@Global.getConfig('productVersion')}</div>
 	&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')}

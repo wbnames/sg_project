@@ -10,7 +10,7 @@ import com.jeesite.modules.production.entity.DesignPPP;
 /**
  * 生产管理DAO接口
  * @author wang_bo
- * @version 2022-06-06
+ * @version 2022-05-30
  */
 @MyBatisDao
 public interface DesignPPPDao extends CrudDao<DesignPPP> {

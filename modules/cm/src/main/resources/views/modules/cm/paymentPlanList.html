@@ -121,7 +121,7 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'${text("甲方单位")}', name:'firstUnit', index:'a.first_unit', width:150, align:"left"},
 		{header:'${text("银行账户")}', name:'bankAcc', index:'a.bank_acc', width:150, align:"left"},
-		{header:'${text("签订日期")}', name:'signDate', index:'a.sign_date', width:150, align:"center"},
+		{header:'${text("签订日期")}', name:'signDate', index:'a.sign_date', width:150, align:"left"},
 		{header:'${text("填报人")}', name:'informantUser', index:'a.informant_user', width:150, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);

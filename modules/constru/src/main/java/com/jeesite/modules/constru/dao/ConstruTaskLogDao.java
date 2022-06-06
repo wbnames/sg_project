@@ -5,14 +5,14 @@ package com.jeesite.modules.constru.dao;
 
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
-import com.jeesite.modules.constru.entity.ConstructionTeamCopy1;
+import com.jeesite.modules.constru.entity.ConstruTaskLog;
 
 /**
- * 施工任务DAO接口
+ * 施工日志DAO接口
  * @author lyu
- * @version 2022-05-24
+ * @version 2022-05-30
  */
 @MyBatisDao
-public interface ConstructionTeamCopy1Dao extends CrudDao<ConstructionTeamCopy1> {
+public interface ConstruTaskLogDao extends CrudDao<ConstruTaskLog> {
 	
 }
