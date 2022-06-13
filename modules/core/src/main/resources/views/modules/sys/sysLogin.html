@@ -18,7 +18,7 @@
 	<div class="login-logo">
 		<img src="${ctxStatic}/images/logo.png" style="height: 55px;width: 60px;margin-left: -12px;" alt="logo">
 		<a href="${ctx}/login"><b>${@Global.getConfig('productName')}</b>
-			<small>${@Global.getConfig('productVersion')}</small></a>
+			<!--<small>${@Global.getConfig('productVersion')}</small>--></a>
 	</div>
 	<div class="login-box-body">
 		<% var isLoginByValidCode = @Global.getConfigToBoolean('user.loginByValidCode', 'true'); %>
@@ -111,9 +111,9 @@
 		</div>
 	</div>
 	<div class="login-copyright">
-		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} <a
+		&copy;${@DateUtils.getYear()} ${@Global.getConfig('companyName')} 版权所有<a
 			id="loginKey" data-key="${@Global.getConfig('shiro.loginSubmit.secretKey')}"
-			href="http://jeesite.com" target="_blank">${@Global.getConfig('productVersion')}</a>
+			href="#" target="_blank"></a>
 	</div>
 </div>
 <% } %>

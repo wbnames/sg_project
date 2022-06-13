@@ -8,12 +8,12 @@
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3>1个</h3>
-                        <p>待办生产任务</p>
+                        <p>待办任务</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <a href="${ctx}/production/productionManager/list" class="small-box-footer">点击处理<i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="#task_anchor" class="small-box-footer">点击处理<i class="fa fa-arrow-circle-right"></i></a>
                 </div>
 			</div>
 		</div>
@@ -67,11 +67,16 @@
             <div class="box box-widget">
                 <div class="box-header with-border">
 
+                    <div class="col-sm-1"><h3 class="box-title">项目情况</h3></div>
+                    <div class="col-sm-6">
 
-                    <div class="col-sm-5">
+                        <label class="col-sm-1 control-label" style="width: 17%;margin-top: 5px;text-align: right;"><b>选择项目：</b></label>
+                        <div id="tardiv" class="col-sm-5" >
+                            <#form:select path="roleType" dictType="destop_project"  class="form-control " />
+                        </div>
                     </div>
 
-                    <div class="col-sm-7"><h3 class="box-title">项目情况</h3></div>
+
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -99,172 +104,77 @@
                                 <div id="myChart1" style="height:230px;width:100%"></div><script>
                                 $(function(){
 
-
-                                    var app = {};
-
                                     var chartDom = document.getElementById('myChart1');
                                     var myChart = echarts.init(chartDom);
                                     var option;
 
-                                    const posList = [
-                                        'left',
-                                        'right',
-                                        'top',
-                                        'bottom',
-                                        'inside',
-                                        'insideTop',
-                                        'insideLeft',
-                                        'insideRight',
-                                        'insideBottom',
-                                        'insideTopLeft',
-                                        'insideTopRight',
-                                        'insideBottomLeft',
-                                        'insideBottomRight'
-                                    ];
-                                    app.configParameters = {
-                                        rotate: {
-                                            min: -90,
-                                            max: 90
-                                        },
-                                        align: {
-                                            options: {
-                                                left: 'left',
-                                                center: 'center',
-                                                right: 'right'
-                                            }
-                                        },
-                                        verticalAlign: {
-                                            options: {
-                                                top: 'top',
-                                                middle: 'middle',
-                                                bottom: 'bottom'
-                                            }
-                                        },
-                                        position: {
-                                            options: posList.reduce(function (map, pos) {
-                                                map[pos] = pos;
-                                                return map;
-                                            }, {})
-                                        },
-                                        distance: {
-                                            min: 0,
-                                            max: 100
-                                        }
-                                    };
-                                    app.config = {
-                                        rotate: 90,
-                                        align: 'left',
-                                        verticalAlign: 'middle',
-                                        position: 'insideBottom',
-                                        distance: 15,
-                                        onChange: function () {
-                                            const labelOption = {
-                                                rotate: app.config.rotate,
-                                                align: app.config.align,
-                                                verticalAlign: app.config.verticalAlign,
-                                                position: app.config.position,
-                                                distance: app.config.distance
-                                            };
-                                            myChart.setOption({
-                                                series: [
-                                                    {
-                                                        label: labelOption
-                                                    },
-                                                    {
-                                                        label: labelOption
-                                                    },
-                                                    {
-                                                        label: labelOption
-                                                    },
-                                                    {
-                                                        label: labelOption
-                                                    }
-                                                ]
-                                            });
-                                        }
-                                    };
-                                    const labelOption = {
-                                        show: true,
-                                        position: app.config.position,
-                                        distance: app.config.distance,
-                                        align: app.config.align,
-                                        verticalAlign: app.config.verticalAlign,
-                                        rotate: app.config.rotate,
-                                        formatter: '{c}  {name|{a}}',
-                                        fontSize: 16,
-                                        rich: {
-                                            name: {}
-                                        }
-                                    };
+
+
+
+
                                     option = {
-                                        color: ['#91CC75','#FAC858', '#EE6666'],
+                                        title: {
+                                            text: '材料'
+                                        },
                                         tooltip: {
-                                            trigger: 'axis',
-                                            axisPointer: {
-                                                type: 'shadow'
-                                            }
+                                            trigger: 'axis'
                                         },
                                         legend: {
-                                            data: ['项目进度', '施工进度', '生产进度']
+                                            data: ['计划生产', '实际生产', '计划施工', '实际施工']
+                                        },
+                                        grid: {
+                                            left: '3%',
+                                            right: '4%',
+                                            bottom: '3%',
+                                            containLabel: true
                                         },
                                         toolbox: {
-                                            show: true,
-                                            orient: 'vertical',
-                                            left: 'right',
-                                            top: 'center',
-                                            feature: {
-                                                mark: { show: true },
-                                                dataView: { show: true, readOnly: false },
-                                                magicType: { show: true, type: ['line', 'bar', 'stack'] },
-                                                restore: { show: true },
-                                                saveAsImage: { show: true }
+                                            show : true,
+                                            feature : {
+                                                mark : {show: true},
+                                                dataView : {show: true, readOnly: false},
+                                                magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                                                restore : {show: true},
+                                                saveAsImage : {show: true}
                                             }
                                         },
-                                        xAxis: [
-                                            {
-                                                type: 'category',
-                                                axisTick: { show: false },
-                                                data: ['XX二期工程A地块', 'XX二期工程B地块', 'XX二期工程C地块']
+                                        xAxis: {
+                                            type: 'category',
+                                            boundaryGap: false,
+                                            data : ['2022-6-6','2022-6-7','2022-6-8','2022-6-9','2022-6-10','2022-6-11','2022-6-12','2022-6-13','2022-6-14','2022-6-15']
+                                        },
+                                        yAxis: {
+                                            name: '件数(个)',
+                                            type: 'value',
+                                            axisLine: {
+                                                symbol : [ 'none' , 'arrow'],
+                                                symbolOffset: 5,
+                                                symbolSize:[10,10],
+                                                show:true
                                             }
-                                        ],
-                                        yAxis: [
-                                            {
-                                                type: 'value',
-                                                axisLabel: {
-                                                    formatter: function (value) {
-                                                        return value + '%';
-                                                    }
-                                                }
-                                            }
-                                        ],
+
+                                        },
+                                        color: ['#00C0EF','#00A65A','#DD4B39','#F39C12'],
                                         series: [
                                             {
-                                                name: '项目进度',
-                                                type: 'bar',
-                                                barGap: 0,
-                                                barWidth: 17,
-                                                emphasis: {
-                                                    focus: 'series'
-                                                },
-                                                data: [80, 70, 90]
+                                                name: '计划生产',
+                                                type: 'line',
+                                                data: [0, 232, 301, 434, 500, 630, 710,850,900,950]
                                             },
                                             {
-                                                name: '施工进度',
-                                                type: 'bar',
-                                                barWidth: 17,
-                                                emphasis: {
-                                                    focus: 'series'
-                                                },
-                                                data: [40, 50, 60]
+                                                name: '实际生产',
+                                                type: 'line',
+                                                data: [0, 200, 290, 420, 480, 622, 700,830,890,940]
                                             },
                                             {
-                                                name: '生产进度',
-                                                type: 'bar',
-                                                barWidth: 17,
-                                                emphasis: {
-                                                    focus: 'series'
-                                                },
-                                                data: [60, 40, 50]
+                                                name: '计划施工',
+                                                type: 'line',
+                                                data: [0, 182, 291, 430, 490, 600, 700,840,890,940]
+                                            },
+                                            {
+                                                name: '实际施工',
+                                                type: 'line',
+                                                data: [0, 132, 281, 424, 280, 310, 650,700,890,930]
                                             }
                                         ]
                                     };
@@ -291,14 +201,7 @@
 				<div class="box-header with-border">
 
 
-                    <div class="col-sm-5">
-
-                    <label class="col-sm-1 control-label" style="width: 17%;margin-top: 5px;text-align: right;"><b>选择项目：</b></label>
-                        <div id="tardiv" class="col-sm-5" >
-                            <#form:select path="roleType" dictType="destop_project"  class="form-control " />
-                        </div>
-                    </div>
-
+                    <div class="col-sm-12" id="task_anchor"><h3 class="box-title">项目状态</h3></div>
 
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -320,562 +223,8 @@
 					</div>
 				</div>
 				<div class="box-body">
-					<div class="row">
-						<div class="col-md-8">
-							<div class="chart">
-								<div id="myChart" style="height:230px;width:100%"></div><script>
-									$(function(){
-                                        chart_three();
-									});
-
-                                    function chart_two(){
-                                        myChart1 = echarts.init(document.getElementById('myChart'), 'default');
-                                        myChart1.setOption({
-                                            title : {
-                                                text: '建材使用总消耗占比'
-                                            },
-                                            tooltip : {
-                                                trigger: 'axis'
-                                            },
-                                            legend: {
-                                                data:['未使用量','已使用量']
-                                            },
-                                            toolbox: {
-                                                show : true,
-                                                feature : {
-                                                    mark : {show: true},
-                                                    dataView : {show: true, readOnly: false},
-                                                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-                                                    restore : {show: true},
-                                                    saveAsImage : {show: true}
-                                                }
-                                            },
-                                            calculable : true,
-                                            grid : {
-                                                top: '49',
-                                                right: '20',
-                                                bottom: '30'
-                                            },
-                                            xAxis : [
-                                                {
-                                                    type : 'category',
-                                                    boundaryGap : false,
-                                                    data : ['铝板A','铝板B','木材A','工程塑料A','石材A','金属A']
-                                                }
-                                            ],
-                                            yAxis : [
-                                                {
-                                                    type : 'value',
-                                                    axisLabel: {
-                                                        formatter: function (value) {
-                                                            return value;
-                                                        }
-                                                    }
-                                                }
-                                            ],
-                                            color: ['#EE6666','#91CC75'],
-                                            series : [
-                                                {
-                                                    name:'未使用量',
-                                                    type:'bar',
-                                                    smooth:true,
-                                                    barWidth: 27,
-                                                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                                                    data:[30, 40, 45, 54, 260, 830]
-                                                },
-                                                {
-                                                    name:'已使用量',
-                                                    type:'bar',
-                                                    smooth:true,
-                                                    barWidth: 27,
-                                                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                                                    data:[90, 182, 434, 791, 390, 600]
-                                                }
-                                            ]
-                                        });
-                                    }
-
-                                    function chart_three(){
-
-
-                                        myChart1 = echarts.init(document.getElementById('myChart'), 'default');
-                                        myChart1.setOption({
-                                            title : {
-                                                text: '项目进度'
-                                            },
-                                            tooltip : {
-                                                trigger: 'axis'
-                                            },
-                                            legend: {
-                                                data:['施工进度','生产进度']
-                                            },
-                                            toolbox: {
-                                                show : true,
-                                                feature : {
-                                                    mark : {show: true},
-                                                    dataView : {show: true, readOnly: false},
-                                                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-                                                    restore : {show: true},
-                                                    saveAsImage : {show: true}
-                                                }
-                                            },
-                                            calculable : true,
-                                            grid : {
-                                                top: '49',
-                                                right: '20',
-                                                bottom: '30'
-                                            },
-                                            xAxis : [
-                                                {
-                                                    type : 'category',
-                                                    boundaryGap : false,
-                                                    data : ['2022年6月6日','2022年6月7日','2022年6月8日','2022年6月9日','2022年6月10日']
-                                                }
-                                            ],
-                                            yAxis : [
-                                                {
-                                                    type : 'value',
-                                                    axisLabel: {
-                                                        formatter: function (value) {
-                                                            return value + '%';
-                                                        }
-                                                    }
-                                                }
-                                            ],
-                                            color: ['#EE6666','#91CC75'],
-                                            series : [
-                                                {
-                                                    name:'施工进度',
-                                                    type:'bar',
-                                                    smooth:true,
-                                                    barWidth: 27,
-                                                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                                                    data:[10, 20, 30, 40, 50, 60, 70]
-                                                },
-                                                {
-                                                    name:'生产进度',
-                                                    type:'bar',
-                                                    smooth:true,
-                                                    barWidth: 27,
-                                                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                                                    data:[20, 30, 40, 50, 60, 70, 80]
-                                                }
-                                            ]
-                                        });
-                                    }
-
-								</script>
-
-
-
-							</div>
-						</div>
-
-
-
-
-						<div class="col-md-4">
-							<p class="text-center">
-								<strong>XX二期工程A地块</strong>
-							</p>
-							<div class="progress-group">
-                                <span class="progress-text"><a href="#" onclick="project_rate()">项目进度</a></span>
-								<span class="progress-number">80%</span>
-								<div class="progress sm">
-									<div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
-								</div>
-							</div>
-
-                            <div class="progress-group">
-                                <span class="progress-text"><a href="#" onclick="expend_rate()">建材使用总消耗占比</a></span>
-                                <span class="progress-number">70%</span>
-                                <div class="progress sm">
-                                    <div class="progress-bar progress-bar-red" style="width: 70%"></div>
-                                </div>
-                            </div>
-
-                            <script>
-                                function project_rate(){
-                                    chart_three();
-                                }
-                                function expend_rate(){
-                                    chart_two();
-                                }
-                            </script>
-
-
-							<!--<div class="progress-group">
-								<span class="progress-text">查询访问量</span>
-								<span class="progress-number"><b>250</b>/500</span>
-								<div class="progress sm">
-									<div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
-								</div>
-							</div>-->
-						</div>
-					</div>
-				</div>
-
-
-
-                <script>
-
-
-
-
-                    //任务状态
-                    $(function(){
-                        $.post("${ctx}/constru/construTask/listData",function(data){
-                            var html="";
-                            $.each(data.list,function(i,item){
-                                if("1"==item.taskStatus){
-                                    item.taskStatus="未开始"
-                                }else if("2"==item.taskStatus){
-                                    item.taskStatus="施工中"
-                                }else if("3"==item.taskStatus) {
-                                    item.taskStatus = "暂停"
-                                }
-                                item.designPaper="1526466442910605312"
-                                item.productRecord="1526466442910605312"
-                                item.construTeam="A组"
-                                item.projectId="二期工程A地块"
-                                    html+="<tr>"
-                                        +"<td title="+item.numCode+">"+item.numCode+"</td>"
-                                        +"<td title="+item.taskName+">"+item.taskName+"</td>"
-                                        +"<td title="+item.projectId+">"+item.projectId+"</td>"
-                                        +"<td title="+item.taskStatus+">"+item.taskStatus+"</td>"
-                                        +"<td title="+item.startDate+">"+item.startDate+"</td>"
-                                        +"<td title="+item.planAccomplishDate+">"+item.planAccomplishDate+"</td>"
-                                        +"<td title="+item.principalId+">"+item.principalId+"</td>"
-                                        +"<td title="+item.designPaper+">"+item.designPaper+"</td>"
-                                        +"<td title="+item.productRecord+">"+item.productRecord+"</td>"
-                                        +"<td title="+item.construTeam+">"+item.construTeam+"</td>"
-                                        +"<td title="+item.status+">"+item.status+"</td>"
-                                "</tr>";
-
-
-                            });
-                            html+="</table>";
-                            $("#pro_2").append(html);
-                        })
-                    })
-
-                    //项目状态
-                    $(function(){
-                        $.post("${ctx}/pm/projectManager/listData",function(data){
-                            var html="";
-                            $.each(data.list,function(i,item){
-                                if("1"==item.projectStatus){
-                                    item.projectStatus="未开始"
-                                }else if("2"==item.projectStatus){
-                                    item.projectStatus="施工中"
-                                }else if("3"==item.projectStatus){
-                                    item.projectStatus="暂停"
-                                }
-                                html+="<tr>"
-                                    +"<td title="+item.serialNumber+">"+item.serialNumber+"</td>"
-                                    +"<td title="+item.name+">"+item.name+"</td>"
-                                    +"<td title="+item.area+">"+item.area+"</td>"
-                                    +"<td title="+item.regulators+">"+item.regulators+"</td>"
-                                    +"<td title="+item.projectStatus+">"+item.projectStatus+"</td>"
-                                    +"<td title="+item.constructionUnit+">"+item.constructionUnit+"</td>"
-                                    +"<td title="+item.mainContractor+">"+item.mainContractor+"</td>"
-                                    +"<td title="+item.status+">"+item.status+"</td>"
-                                "</tr>";
-
-
-                            });
-                            html+="</table>";
-                            $("#pro_1").append(html);
-                        })
-                    })
-
-                    //物流状态
-                    $(function(){
-                        $.post("${ctx}/logistics/shipmentsLogistics/listData",function(data){
-                            var html="";
-                            $.each(data.list,function(i,item){
-                                if("1"==item.shipmentsStatus){
-                                    item.shipmentsStatus="未发货"
-                                }else if("2"==item.shipmentsStatus){
-                                    item.shipmentsStatus="运输中"
-                                }else if("3"==item.shipmentsStatus) {
-                                    item.shipmentsStatus = "已送达"
-                                }
-                                item.shipmentsProject="星空建筑A大厦"
-                                html+="<tr>"
-                                    +"<td title="+item.shipmentsName+">"+item.shipmentsName+"</td>"
-                                    +"<td title="+item.shipmentsProject+">"+item.shipmentsProject+"</td>"
-                                    +"<td title="+item.shipmentsManufacturer+">"+item.shipmentsManufacturer+"</td>"
-                                    +"<td title="+item.shipmentsUser+">"+item.shipmentsUser+"</td>"
-                                    +"<td title="+item.shipmentsOdd+">"+item.shipmentsOdd+"</td>"
-                                    +"<td title="+item.shipmentsCost+">"+item.shipmentsCost+"</td>"
-                                    +"<td title="+item.shipmentsCom+">"+item.shipmentsCom+"</td>"
-                                    +"<td title="+item.shipmentsStatus+">"+item.shipmentsStatus+"</td>"
-                                    +"<td title="+item.consignee+">"+item.consignee+"</td>"
-                                    +"<td title="+item.consigneePhone+">"+item.consigneePhone+"</td>"
-                                    +"<td title="+item.consigneeAddress+">"+item.consigneeAddress+"</td>"
-                                    +"<td title="+item.status+">"+item.status+"</td>"
-                                "</tr>";
-
-
-                            });
-                            html+="</table>";
-                            $("#pro_3").append(html);
-                        })
-                    })
-
-
-                </script>
-
-				<div class="box-footer">
                     <div class="row">
-                        <div class="col-sm-3 col-xs-6">
-                        <h4>任务状态 </h4>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-
-                            <div class="nav-tabs-custom">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#tab_1_1" data-toggle="tab" >全部</a></li>
-                                    <li><a href="#tab_2_2" data-toggle="tab" >未开始</a></li>
-                                    <li><a href="#tab_3_3" data-toggle="tab" >进行中</a></li>
-                                    <li><a href="#tab_4_4" data-toggle="tab" >暂停</a></li>
-                                    <li><a href="#tab_5_5" data-toggle="tab" >提前</a></li>
-                                    <li><a href="#tab_6_6" data-toggle="tab" >完成</a></li>
-                                    <li><a href="#tab_7_7" data-toggle="tab" >延期</a></li>
-                                </ul>
-
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="tab_1_1">
-                                        <div class="box">
-
-                                            <div class="box-body">
-                                                <table id="example3" class="table table-bordered table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>编号</th>
-                                                        <th>任务名称</th>
-                                                        <th>所属项目</th>
-                                                        <th>任务状态</th>
-                                                        <th>开始日期</th>
-                                                        <th>计划完成日期</th>
-                                                        <th>负责人</th>
-                                                        <th>设计图纸</th>
-                                                        <th>产品列表</th>
-                                                        <th>施工班组</th>
-                                                        <th>状态</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="pro_2">
-                                                </table>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="tab-pane" id="tab_2_2">
-                                        <div class="box">
-
-                                            <div class="box-body">
-                                                <table id="example2" class="table table-bordered table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>编号</th>
-                                                        <th>任务名称</th>
-                                                        <th>所属项目</th>
-                                                        <th>任务状态</th>
-                                                        <th>开始日期</th>
-                                                        <th>计划完成日期</th>
-                                                        <th>负责人</th>
-                                                        <th>设计图纸</th>
-                                                        <th>产品列表</th>
-                                                        <th>施工班组</th>
-                                                        <th>状态</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>1526466442809942016</td>
-                                                        <td>关闭水闸</td>
-                                                        <td>二期工程A地块</td>
-                                                        <td>未开始</td>
-                                                        <td>2022年5月29日</td>
-                                                        <td>2022年5月30日</td>
-                                                        <td>张三</td>
-                                                        <td>1526466442910605312</td>
-                                                        <td>1526466443351007232</td>
-                                                        <td>A班组</td>
-                                                        <td>正常</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab_3_3">
-                                        <div class="box">
-
-                                            <div class="box-body">
-                                                <table id="example4" class="table table-bordered table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>编号</th>
-                                                        <th>任务名称</th>
-                                                        <th>所属项目</th>
-                                                        <th>任务状态</th>
-                                                        <th>开始日期</th>
-                                                        <th>计划完成日期</th>
-                                                        <th>负责人</th>
-                                                        <th>设计图纸</th>
-                                                        <th>产品列表</th>
-                                                        <th>施工班组</th>
-                                                        <th>状态</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>1526466442809942016</td>
-                                                        <td>处理废料</td>
-                                                        <td>二期工程B地块</td>
-                                                        <td>进行中</td>
-                                                        <td>2022年5月29日</td>
-                                                        <td>2022年5月30日</td>
-                                                        <td>李四</td>
-                                                        <td>1526466442910605312</td>
-                                                        <td>1526466443351007232</td>
-                                                        <td>B班组</td>
-                                                        <td>正常</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab_4_4">
-                                        <div class="box">
-
-                                            <div class="box-body">
-                                                <table id="example6" class="table table-bordered table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>编号</th>
-                                                        <th>任务名称</th>
-                                                        <th>所属项目</th>
-                                                        <th>任务状态</th>
-                                                        <th>开始日期</th>
-                                                        <th>计划完成日期</th>
-                                                        <th>负责人</th>
-                                                        <th>设计图纸</th>
-                                                        <th>产品列表</th>
-                                                        <th>施工班组</th>
-                                                        <th>状态</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                </table>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab_5_5">
-                                        <div class="box">
-
-                                            <div class="box-body">
-                                                <table id="example7" class="table table-bordered table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>编号</th>
-                                                        <th>任务名称</th>
-                                                        <th>所属项目</th>
-                                                        <th>任务状态</th>
-                                                        <th>开始日期</th>
-                                                        <th>计划完成日期</th>
-                                                        <th>负责人</th>
-                                                        <th>设计图纸</th>
-                                                        <th>产品列表</th>
-                                                        <th>施工班组</th>
-                                                        <th>状态</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                </table>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab_6_6">
-                                        <div class="box">
-
-                                            <div class="box-body">
-                                                <table id="example8" class="table table-bordered table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>编号</th>
-                                                        <th>任务名称</th>
-                                                        <th>所属项目</th>
-                                                        <th>任务状态</th>
-                                                        <th>开始日期</th>
-                                                        <th>计划完成日期</th>
-                                                        <th>负责人</th>
-                                                        <th>设计图纸</th>
-                                                        <th>产品列表</th>
-                                                        <th>施工班组</th>
-                                                        <th>状态</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                </table>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab_7_7">
-                                        <div class="box">
-
-                                            <div class="box-body">
-                                                <table id="example9" class="table table-bordered table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>编号</th>
-                                                        <th>任务名称</th>
-                                                        <th>所属项目</th>
-                                                        <th>任务状态</th>
-                                                        <th>开始日期</th>
-                                                        <th>计划完成日期</th>
-                                                        <th>负责人</th>
-                                                        <th>设计图纸</th>
-                                                        <th>产品列表</th>
-                                                        <th>施工班组</th>
-                                                        <th>状态</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                </table>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-				</div>
-
-                <div class="box-footer">
-                    <div class="row">
-                        <div class="col-sm-3 col-xs-6">
-                            <h4>项目状态 </h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-5">
 
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
@@ -896,14 +245,10 @@
                                                 <table id="example44" class="table table-bordered table-hover">
                                                     <thead>
                                                     <tr>
-                                                        <th>编号</th>
                                                         <th>项目名称</th>
-                                                        <th>所在区域</th>
                                                         <th>行业监管单位</th>
+                                                        <th>负责人</th>
                                                         <th>工程状态</th>
-                                                        <th>建设单位</th>
-                                                        <th>总建单位</th>
-                                                        <th>状态</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody id="pro_1">
@@ -1090,15 +435,502 @@
 
                             </div>
                         </div>
+                        <div class="col-md-7">
+                            <div class="chart">
+                            <div id="myChart" style="height:230px;width:100%"></div><script>
+                            $(function(){
+                                chart_three();
+                            });
+
+                            /*function chart_two(){
+                                myChart1 = echarts.init(document.getElementById('myChart'), 'default');
+                                myChart1.setOption({
+                                    title : {
+                                        text: '建材使用总消耗占比'
+                                    },
+                                    tooltip : {
+                                        trigger: 'axis'
+                                    },
+                                    legend: {
+                                        data:['未使用量','已使用量']
+                                    },
+                                    toolbox: {
+                                        show : true,
+                                        feature : {
+                                            mark : {show: true},
+                                            dataView : {show: true, readOnly: false},
+                                            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                                            restore : {show: true},
+                                            saveAsImage : {show: true}
+                                        }
+                                    },
+                                    calculable : true,
+                                    grid : {
+                                        top: '49',
+                                        right: '20',
+                                        bottom: '30'
+                                    },
+                                    xAxis : [
+                                        {
+                                            type : 'category',
+                                            boundaryGap : false,
+                                            data : ['铝板A','铝板B','木材A','工程塑料A','石材A','金属A']
+                                        }
+                                    ],
+                                    yAxis : [
+                                        {
+                                            type : 'value',
+                                            axisLabel: {
+                                                formatter: function (value) {
+                                                    return value;
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    color: ['#EE6666','#91CC75'],
+                                    series : [
+                                        {
+                                            name:'未使用量',
+                                            type:'bar',
+                                            smooth:true,
+                                            barWidth: 27,
+                                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                                            data:[30, 40, 45, 54, 260, 830]
+                                        },
+                                        {
+                                            name:'已使用量',
+                                            type:'bar',
+                                            smooth:true,
+                                            barWidth: 27,
+                                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                                            data:[90, 182, 434, 791, 390, 600]
+                                        }
+                                    ]
+                                });
+                            }*/
+
+                            function chart_three(){
+
+
+                                myChart1 = echarts.init(document.getElementById('myChart'), 'default');
+                                myChart1.setOption({
+                                    tooltip : {
+                                        trigger: 'axis'
+                                    },
+                                    legend: {
+                                        data:['计划生产','实际生产','计划施工','实际施工']
+                                    },
+                                    toolbox: {
+                                        show : true,
+                                        feature : {
+                                            mark : {show: true},
+                                            dataView : {show: true, readOnly: false},
+                                            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                                            restore : {show: true},
+                                            saveAsImage : {show: true}
+                                        }
+                                    },
+                                    calculable : true,
+                                    grid : {
+                                        top: '49',
+                                        right: '20',
+                                        bottom: '30'
+                                    },
+                                    xAxis : [
+                                        {
+                                            type : 'category',
+                                            boundaryGap : true,
+                                            data : ['星空建筑C大厦','星空建筑B大厦','星空建筑A大厦']
+                                        }
+                                    ],
+                                    yAxis : [
+                                        {
+                                            name: '件数(个)',
+                                            type: 'value'
+                                        }
+                                    ],
+                                    color: ['#00C0EF','#00A65A','#DD4B39','#F39C12'],
+                                    series : [
+                                        {
+                                            name:'计划生产',
+                                            type:'bar',
+                                            smooth:true,
+                                            barWidth: 20,
+                                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                                            data:[1000, 1500, 900]
+                                        },
+                                        {
+                                            name:'实际生产',
+                                            type:'bar',
+                                            smooth:true,
+                                            barWidth: 20,
+                                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                                            data:[900, 1400, 900]
+                                        },
+                                        {
+                                            name:'计划施工',
+                                            type:'bar',
+                                            smooth:true,
+                                            barWidth: 20,
+                                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                                            data:[900, 1400, 900]
+                                        },
+                                        {
+                                            name:'实际施工',
+                                            type:'bar',
+                                            smooth:true,
+                                            barWidth: 20,
+                                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                                            data:[800, 1359, 890]
+                                        }
+                                    ]
+                                });
+                            }
+
+                        </script>
+
+
+
+                        </div>
+
+                        </div>
+                    </div>
+				</div>
+
+
+
+                <div class="box-header with-border">
+
+
+                    <div class="col-sm-12"><h3 class="box-title">任务状态</h3></div>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">导出Excel</a></li>
+                                <li><a href="#">导出Word</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">基本设置</a></li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-5">
+
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tab_1_1" data-toggle="tab" >全部</a></li>
+                                    <li><a href="#tab_2_2" data-toggle="tab" >未开始</a></li>
+                                    <li><a href="#tab_3_3" data-toggle="tab" >进行中</a></li>
+                                    <li><a href="#tab_4_4" data-toggle="tab" >暂停</a></li>
+                                    <li><a href="#tab_5_5" data-toggle="tab" >提前</a></li>
+                                    <li><a href="#tab_6_6" data-toggle="tab" >完成</a></li>
+                                    <li><a href="#tab_7_7" data-toggle="tab" >延期</a></li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab_1_1">
+                                        <div class="box">
+
+                                            <div class="box-body">
+                                                <table id="example3" class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>任务名称</th>
+                                                        <th>所属项目</th>
+                                                        <th>任务状态</th>
+                                                        <th>计划完成日期</th>
+                                                        <th>负责人</th>
+                                                        <th>施工班组</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="pro_2">
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="tab_2_2">
+                                        <div class="box">
+
+                                            <div class="box-body">
+                                                <table id="example2" class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>任务名称</th>
+                                                        <th>所属项目</th>
+                                                        <th>任务状态</th>
+                                                        <th>计划完成日期</th>
+                                                        <th>负责人</th>
+                                                        <th>施工班组</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>关闭水闸</td>
+                                                        <td>二期工程A地块</td>
+                                                        <td>未开始</td>
+                                                        <td>2022年5月30日</td>
+                                                        <td>张三</td>
+                                                        <td>A班组</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab_3_3">
+                                        <div class="box">
+
+                                            <div class="box-body">
+                                                <table id="example4" class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>任务名称</th>
+                                                        <th>所属项目</th>
+                                                        <th>任务状态</th>
+                                                        <th>计划完成日期</th>
+                                                        <th>负责人</th>
+                                                        <th>施工班组</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>处理废料</td>
+                                                        <td>二期工程B地块</td>
+                                                        <td>进行中</td>
+                                                        <td>2022年5月30日</td>
+                                                        <td>李四</td>
+                                                        <td>B班组</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab_4_4">
+                                        <div class="box">
+
+                                            <div class="box-body">
+                                                <table id="example6" class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>任务名称</th>
+                                                        <th>所属项目</th>
+                                                        <th>任务状态</th>
+                                                        <th>计划完成日期</th>
+                                                        <th>负责人</th>
+                                                        <th>施工班组</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab_5_5">
+                                        <div class="box">
+
+                                            <div class="box-body">
+                                                <table id="example7" class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>编号</th>
+                                                        <th>任务名称</th>
+                                                        <th>所属项目</th>
+                                                        <th>任务状态</th>
+                                                        <th>开始日期</th>
+                                                        <th>计划完成日期</th>
+                                                        <th>负责人</th>
+                                                        <th>设计图纸</th>
+                                                        <th>产品列表</th>
+                                                        <th>施工班组</th>
+                                                        <th>状态</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab_6_6">
+                                        <div class="box">
+
+                                            <div class="box-body">
+                                                <table id="example8" class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>编号</th>
+                                                        <th>任务名称</th>
+                                                        <th>所属项目</th>
+                                                        <th>任务状态</th>
+                                                        <th>开始日期</th>
+                                                        <th>计划完成日期</th>
+                                                        <th>负责人</th>
+                                                        <th>设计图纸</th>
+                                                        <th>产品列表</th>
+                                                        <th>施工班组</th>
+                                                        <th>状态</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab_7_7">
+                                        <div class="box">
+
+                                            <div class="box-body">
+                                                <table id="example9" class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>编号</th>
+                                                        <th>任务名称</th>
+                                                        <th>所属项目</th>
+                                                        <th>任务状态</th>
+                                                        <th>开始日期</th>
+                                                        <th>计划完成日期</th>
+                                                        <th>负责人</th>
+                                                        <th>设计图纸</th>
+                                                        <th>产品列表</th>
+                                                        <th>施工班组</th>
+                                                        <th>状态</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="chart">
+                                <div id="taskChart" style="height:230px;width:100%"></div><script>
+                                $(function(){
+                                    chart_two();
+                                });
+
+
+                                function chart_two(){
+
+
+                                    myChart1 = echarts.init(document.getElementById('taskChart'), 'default');
+                                    myChart1.setOption({
+                                        tooltip : {
+                                            trigger: 'axis'
+                                        },
+                                        legend: {
+                                            data:['计划施工','实际施工']
+                                        },
+                                        toolbox: {
+                                            show : true,
+                                            feature : {
+                                                mark : {show: true},
+                                                dataView : {show: true, readOnly: false},
+                                                magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                                                restore : {show: true},
+                                                saveAsImage : {show: true}
+                                            }
+                                        },
+                                        calculable : true,
+                                        grid : {
+                                            top: '49',
+                                            right: '20',
+                                            bottom: '30'
+                                        },
+                                        xAxis : [
+                                            {
+                                                type : 'category',
+                                                boundaryGap : true,
+                                                data : ['a区域水泥施工','a区域安全巡查','a区域水闸管理']
+                                            }
+                                        ],
+                                        yAxis : [
+                                            {
+                                                name: '件数(个)',
+                                                type: 'value'
+                                            }
+                                        ],
+                                        color: ['#DD4B39','#F39C12'],
+                                        series : [
+                                            {
+                                                name:'计划施工',
+                                                type:'bar',
+                                                smooth:true,
+                                                barWidth: 20,
+                                                itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                                                data:[900, 1400, 900]
+                                            },
+                                            {
+                                                name:'实际施工',
+                                                type:'bar',
+                                                smooth:true,
+                                                barWidth: 20,
+                                                itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                                                data:[800, 1359, 890]
+                                            }
+                                        ]
+                                    });
+                                }
+
+                            </script>
+
+
+
+                            </div>
+
+                        </div>
                     </div>
                 </div>
 
-                <div class="box-footer">
-                    <div class="row">
-                        <div class="col-sm-3 col-xs-6">
-                            <h4>物流状态 </h4>
+
+                <div class="box-header with-border">
+
+
+                    <div class="col-sm-12"><h3 class="box-title">物流状态</h3></div>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">导出Excel</a></li>
+                                <li><a href="#">导出Word</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">基本设置</a></li>
+                            </ul>
                         </div>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove">
+                            <i class="fa fa-times"></i>
+                        </button>
                     </div>
+                </div>
+                <div class="box-body">
                     <div class="row">
                         <div class="col-md-12">
 
@@ -1327,6 +1159,109 @@
                         </div>
                     </div>
                 </div>
+
+                <script>
+
+
+                    //项目状态
+                    $(function(){
+                        $.post("${ctx}/pm/projectManager/listData",function(data){
+                            var html="";
+                            $.each(data.list,function(i,item){
+                                if("1"==item.projectStatus){
+                                    item.projectStatus="未开始"
+                                }else if("2"==item.projectStatus){
+                                    item.projectStatus="施工中"
+                                }else if("3"==item.projectStatus){
+                                    item.projectStatus="暂停"
+                                }
+                                item.principal="张三";
+                                html+="<tr>"
+                                    +"<td title="+item.name+">"+item.name+"</td>"
+                                    +"<td title="+item.regulators+">"+item.regulators+"</td>"
+                                    +"<td title="+item.principal+">"+item.principal+"</td>"
+                                    +"<td title="+item.projectStatus+">"+item.projectStatus+"</td>"
+                                "</tr>";
+
+
+                            });
+                            html+="</table>";
+                            $("#pro_1").append(html);
+                        })
+                    })
+
+                    //任务状态
+                    $(function(){
+                        $.post("${ctx}/constru/construTask/listData",function(data){
+                            var html="";
+                            $.each(data.list,function(i,item){
+                                if("1"==item.taskStatus){
+                                    item.taskStatus="未开始"
+                                }else if("2"==item.taskStatus){
+                                    item.taskStatus="施工中"
+                                }else if("3"==item.taskStatus) {
+                                    item.taskStatus = "暂停"
+                                }
+                                item.designPaper="1526466442910605312"
+                                item.productRecord="1526466442910605312"
+                                item.construTeam="A组"
+                                item.projectId="星空建筑A大厦"
+                                    html+="<tr>"
+                                        +"<td title="+item.taskName+">"+item.taskName+"</td>"
+                                        +"<td title="+item.projectId+">"+item.projectId+"</td>"
+                                        +"<td title="+item.taskStatus+">"+item.taskStatus+"</td>"
+                                        +"<td title="+item.planAccomplishDate+">"+item.planAccomplishDate+"</td>"
+                                        +"<td title="+item.principalId+">"+item.principalId+"</td>"
+                                        +"<td title="+item.construTeam+">"+item.construTeam+"</td>"
+                                "</tr>";
+
+
+                            });
+                            html+="</table>";
+                            $("#pro_2").append(html);
+                        })
+                    })
+
+                    //物流状态
+                    $(function(){
+                        $.post("${ctx}/logistics/shipmentsLogistics/listData",function(data){
+                            var html="";
+                            $.each(data.list,function(i,item){
+                                if("1"==item.shipmentsStatus){
+                                    item.shipmentsStatus="未发货"
+                                }else if("2"==item.shipmentsStatus){
+                                    item.shipmentsStatus="运输中"
+                                }else if("3"==item.shipmentsStatus) {
+                                    item.shipmentsStatus = "已送达"
+                                }
+                                item.shipmentsProject="星空建筑A大厦"
+                                html+="<tr>"
+                                    +"<td title="+item.shipmentsName+">"+item.shipmentsName+"</td>"
+                                    +"<td title="+item.shipmentsProject+">"+item.shipmentsProject+"</td>"
+                                    +"<td title="+item.shipmentsManufacturer+">"+item.shipmentsManufacturer+"</td>"
+                                    +"<td title="+item.shipmentsUser+">"+item.shipmentsUser+"</td>"
+                                    +"<td title="+item.shipmentsOdd+">"+item.shipmentsOdd+"</td>"
+                                    +"<td title="+item.shipmentsCost+">"+item.shipmentsCost+"</td>"
+                                    +"<td title="+item.shipmentsCom+">"+item.shipmentsCom+"</td>"
+                                    +"<td title="+item.shipmentsStatus+">"+item.shipmentsStatus+"</td>"
+                                    +"<td title="+item.consignee+">"+item.consignee+"</td>"
+                                    +"<td title="+item.consigneePhone+">"+item.consigneePhone+"</td>"
+                                    +"<td title="+item.consigneeAddress+">"+item.consigneeAddress+"</td>"
+                                    +"<td title="+item.status+">"+item.status+"</td>"
+                                "</tr>";
+
+
+                            });
+                            html+="</table>";
+                            $("#pro_3").append(html);
+                        })
+                    })
+
+
+                </script>
+
+
+
 
 
 			</div>
